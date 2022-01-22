@@ -10,6 +10,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@mui/icons-material": "^5.3.0",
     "@mui/lab": "latest",
     "@mui/material": "latest",
     "@mui/styled-engine-sc": "latest",
@@ -20,6 +21,7 @@
     "react-dom": "latest",
     "react-router-dom": "6",
     "react-scripts": "latest",
+    "recharts": "^2.1.8",
     "styled-components": "latest"
   },
   "devDependencies": {

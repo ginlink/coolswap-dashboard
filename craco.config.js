@@ -1,4 +1,5 @@
-const CracoAlias = require('craco-alias');
+/* eslint-disable @typescript-eslint/no-var-requires */
+const CracoAlias = require('craco-alias')
 
 module.exports = {
   plugins: [
@@ -14,6 +15,7 @@ module.exports = {
   webpack: {
     alias: {
       '@mui/styled-engine': '@mui/styled-engine-sc',
+      // '@': path.resolve(__dirname, 'src'),
     },
   },
-};
+}
