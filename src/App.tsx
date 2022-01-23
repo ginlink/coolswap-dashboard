@@ -1,11 +1,11 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Test from './pages/Test'
+import Dashboard from './components/Dashboard/Dashboard'
+import Web3ReactManager from './components/Web3ReactManager'
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/test" element={<Test />} />
-    </Routes>
+    <Web3ReactManager>
+      <Dashboard />
+    </Web3ReactManager>
   )
 }
