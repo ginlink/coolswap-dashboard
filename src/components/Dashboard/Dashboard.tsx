@@ -147,8 +147,6 @@ export default function Dashboard() {
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-
         <Header open={open} toggleDrawer={toggleDrawer} />
 
         <Nav open={open} toggleDrawer={toggleDrawer} />

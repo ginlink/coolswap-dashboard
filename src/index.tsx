@@ -10,8 +10,6 @@ ReactDOM.render(
   <React.Fragment>
     <Web3ReactProvider getLibrary={getLibrary}>
       <HashRouter>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
         <App />
       </HashRouter>
     </Web3ReactProvider>
