@@ -1,22 +1,36 @@
 import ReceiveForm from '@/components/ReceiveForm'
-import { receiveTokenApi, tokenListApi, TokenListItem } from '@/services/api'
-import { Box, Modal, Paper, Stack, Typography } from '@mui/material'
-import { DataGrid, GridColDef, GridRowParams, GridRowsProp } from '@mui/x-data-grid'
-import React, { useCallback, useEffect, useState } from 'react'
+import { receiveTokenApi, tokenListApi } from '@/services/api'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Input,
+  Modal,
+  Paper,
+  Stack,
+  TextField,
+  Tooltip,
+  tooltipClasses,
+  TooltipProps,
+  Typography,
+} from '@mui/material'
 import styled from 'styled-components/macro'
+import ReceiveTokenTable, { ReceiveTokenDataItem } from './ReceiveTokenTable'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Icon } from '@iconify/react'
+import copyOutline from '@iconify/icons-eva/copy-outline'
+import checkmarkCircleOutline from '@iconify/icons-eva/checkmark-circle-outline'
+import copy from 'copy-to-clipboard'
+import { shortenAddress } from '@/utils'
 
 const Wrapper = styled.div``
 const StyledPaper = styled(Paper)`
   padding: 20px;
 `
-const columns: GridColDef[] = [
-  { field: 'id', headerName: 'id' },
-  { field: 'chain_id', headerName: 'chain id' },
-  { field: 'address', headerName: 'address', width: 400 },
-  { field: 'symbol', headerName: 'symbol' },
-  { field: 'left_amount', headerName: 'left amount', width: 200 },
-  { field: 'admin', headerName: 'admin', width: 400 },
-]
 
 const style = {
   position: 'absolute' as const,
@@ -30,20 +44,37 @@ const style = {
   p: 2,
 }
 
-export default function ReceiveToken() {
-  const [rows, setRows] = useState<GridRowsProp>([])
-  const [open, setOpen] = useState(false)
-  const [tokenAddress, setTokenAddress] = useState<string | undefined>()
+const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[3],
+    fontSize: 11,
+  },
+}))
 
-  const onRowClickHandler = useCallback((params: GridRowParams) => {
-    const { row } = params as unknown as { row: TokenListItem }
-    const { address } = row
+export default function ReceiveToken() {
+  const [receiveTokenList, setReceiveTokenList] = useState<ReceiveTokenDataItem[]>()
+  const [open, setOpen] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [copySuccessOpen, setCopySuccessOpen] = useState(false)
+  const [tokenAddress, setTokenAddress] = useState<string | undefined>()
+  const [hash, setHash] = useState<string | undefined>()
+  const [symbol, setSymbol] = useState<string>()
+  const [address, setAddress] = useState<string>()
+
+  const handleReceiveClick = useCallback((row: ReceiveTokenDataItem) => {
+    const { address, symbol } = row
+    setAddress(address)
+    setSymbol(symbol)
 
     setTokenAddress(address)
     setOpen(true)
   }, [])
 
-  const onSubmitHandler = useCallback(
+  const handleSubmit = useCallback(
     async (values) => {
       try {
         if (!tokenAddress) return
@@ -52,11 +83,13 @@ export default function ReceiveToken() {
         const token_address = tokenAddress
         const amount = '10000'
 
-        await receiveTokenApi(receive, token_address, amount)
+        const res = await receiveTokenApi(receive, token_address, amount)
+
+        setHash(res.hash)
         setOpen(false)
+        setDialogOpen(true)
       } catch (err) {
         console.log('[err]:', err)
-        throw err
       }
     },
     [tokenAddress]
@@ -66,7 +99,7 @@ export default function ReceiveToken() {
     tokenListApi()
       .then((res) => {
         console.log('[res]:', res)
-        setRows(res)
+        setReceiveTokenList(res)
       })
       .catch((err) => {
         console.log('[err]:', err)
@@ -75,28 +108,81 @@ export default function ReceiveToken() {
 
   return (
     <Wrapper>
-      <StyledPaper elevation={0}>
+      {/* <StyledPaper elevation={0}>
         <Stack direction="row" spacing={2}>
           Receive Header
         </Stack>
-      </StyledPaper>
+      </StyledPaper> */}
 
       <StyledPaper elevation={0} sx={{ marginTop: '10px' }}>
         <div style={{ height: 300, width: '100%' }}>
-          <DataGrid rows={rows ?? []} columns={columns} onRowClick={onRowClickHandler} />
+          <ReceiveTokenTable dataList={receiveTokenList} onReceiveClick={handleReceiveClick} />
         </div>
       </StyledPaper>
 
-      <Modal
-        open={open}
-        onClose={() => setOpen((prev) => !prev)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <ReceiveForm onSubmit={onSubmitHandler} />
-        </Box>
-      </Modal>
+      <Dialog onClose={() => setOpen((prev) => !prev)} open={open}>
+        <DialogTitle>Receive</DialogTitle>
+
+        <DialogContent>
+          <Box>
+            <Typography component="div" variant="body1">
+              Receive Token: {symbol}({address && shortenAddress(address)})
+            </Typography>
+            <ReceiveForm onSubmit={handleSubmit} />
+          </Box>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog maxWidth="sm" onClose={() => setDialogOpen((prev) => !prev)} open={dialogOpen}>
+        <DialogTitle>Receive Success</DialogTitle>
+
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={{ xs: 0.5, sm: 1.5 }}
+              onClick={() => {
+                setCopySuccessOpen(true)
+                copy(hash ?? '')
+                setTimeout(() => {
+                  setCopySuccessOpen(false)
+                }, 1000)
+              }}
+            >
+              <Icon
+                style={{ cursor: 'pointer' }}
+                icon={checkmarkCircleOutline}
+                color={'#00AB55'}
+                width={32}
+                height={32}
+              />
+              <Box>
+                <Typography component="div" variant="body1">
+                  hash:
+                </Typography>
+
+                <Input sx={{ width: '450px' }} defaultValue={hash} />
+              </Box>
+              <LightTooltip
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                open={copySuccessOpen}
+                title="Copy Success"
+                placement="top"
+              >
+                <Icon style={{ cursor: 'pointer' }} icon={copyOutline} width={20} height={20} />
+              </LightTooltip>
+            </Stack>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen((prev) => !prev)} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Wrapper>
   )
 }

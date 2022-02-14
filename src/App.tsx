@@ -1,5 +1,4 @@
 import React from 'react'
-import Dashboard from './components/Dashboard/Dashboard'
 import Web3ReactManager from './components/Web3ReactManager'
 import Router from './Routes'
 import ThemeConfig from './theme'

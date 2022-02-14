@@ -1,4 +1,5 @@
 import http from './index'
+import { TransactionResponse } from '@ethersproject/providers'
 
 export type TokenListItem = {
   id: number
@@ -23,5 +24,5 @@ export function receiveTokenApi(receive: string, token_address: string, amount: 
     receive,
     token_address,
     amount,
-  }) as Promise<TokenListItem[]>
+  }) as Promise<TransactionResponse>
 }

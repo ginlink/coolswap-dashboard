@@ -4,11 +4,11 @@ import DashboardLayout from './layouts/dashboard'
 import LogoOnlyLayout from './layouts/LogoOnlyLayout'
 //
 import Login from './pages/Login'
-import DashboardApp from './pages/DashboardApp'
 import ReceiveToken from './pages/Token/Receive'
 import CreateToken from './pages/Token/Create'
 import NotFound from './pages/Page404'
 import React from 'react'
+import Home from './pages/Home'
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/app" replace /> },
-        { path: 'app', element: <DashboardApp /> },
+        { path: 'app', element: <Home /> },
         {
           path: 'token',
           children: [
