@@ -17,11 +17,11 @@ export type SideBarItem = {
 const getIcon = (name: any) => <Icon icon={name} width={22} height={22} />
 
 const sidebarConfig = [
-  {
-    title: 'dashboard',
-    path: '/dashboard/app',
-    icon: getIcon(pieChart2Fill),
-  },
+  // {
+  //   title: 'dashboard',
+  //   path: '/dashboard/app',
+  //   icon: getIcon(pieChart2Fill),
+  // },
   {
     title: 'Receive Token',
     path: '/dashboard/token/receive',

@@ -26,3 +26,10 @@ export function receiveTokenApi(receive: string, token_address: string, amount: 
     amount,
   }) as Promise<TransactionResponse>
 }
+export function createReceiveTokenApi(chain_id: string, address: string, private_key: string) {
+  return http.post('/token', {
+    chain_id,
+    address,
+    private_key,
+  }) as Promise<any>
+}

@@ -1,3 +1,4 @@
+import EmptyList from '@/components/EmptyList'
 import { getComparator, Order } from '@/utils/sort'
 import {
   Box,
@@ -153,10 +154,16 @@ export default function ReceiveTokenTable({ dataList: rows, onReceiveClick }: Re
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = useMemo(() => {
-    if (!rows) return 0
+    if (!rows || !rows.length) return 0
 
     return page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
   }, [page, rows, rowsPerPage])
+
+  const isEmptyList = useMemo(() => {
+    if (!rows) return true
+
+    return rows.length === 0
+  }, [rows])
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -203,6 +210,16 @@ export default function ReceiveTokenTable({ dataList: rows, onReceiveClick }: Re
                 </TableRow>
               )}
             </TableBody>
+
+            {isEmptyList && (
+              <TableBody>
+                <TableRow>
+                  <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                    <EmptyList />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            )}
           </Table>
         </TableContainer>
         <TablePagination

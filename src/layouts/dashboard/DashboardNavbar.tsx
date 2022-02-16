@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import { Icon } from '@iconify/react'
 import menu2Fill from '@iconify/icons-eva/menu-2-fill'
+import walletOutlined from '@iconify/icons-ant-design/wallet-outlined'
 // material
 import { alpha, styled } from '@mui/material/styles'
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material'
+import { Box, Stack, AppBar, Toolbar, IconButton, Button, Typography } from '@mui/material'
 // components
 import { MHidden } from '../../components/@material-extend'
 //
@@ -12,6 +13,8 @@ import { MHidden } from '../../components/@material-extend'
 // import LanguagePopover from './LanguagePopover'
 // import NotificationsPopover from './NotificationsPopover'
 import React from 'react'
+import { useActiveWeb3React } from '@/hooks/web3'
+import { shortenAddress } from '@/utils'
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +23,7 @@ const APPBAR_MOBILE = 64
 const APPBAR_DESKTOP = 92
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
+  color: theme.palette.grey[800],
   boxShadow: 'none',
   backdropFilter: 'blur(6px)',
   WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
@@ -44,6 +48,8 @@ DashboardNavbar.propTypes = {
 }
 
 export default function DashboardNavbar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
+  const { account } = useActiveWeb3React()
+
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -57,10 +63,20 @@ export default function DashboardNavbar({ onOpenSidebar }: { onOpenSidebar: () =
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          123
-          {/* <LanguagePopover />
-          <NotificationsPopover />
-          <AccountPopover /> */}
+          <Box sx={{ p: 2, pt: 1.5 }}>
+            {account ? (
+              <Button fullWidth color="inherit" variant="outlined">
+                <Stack direction="row" alignItems="center">
+                  <Icon icon={walletOutlined} width={20} height={20} />
+                  <Typography variant="body1">{shortenAddress(account)}</Typography>
+                </Stack>
+              </Button>
+            ) : (
+              <Button fullWidth color="inherit" variant="outlined">
+                <Typography variant="body1">connect to wallet</Typography>
+              </Button>
+            )}
+          </Box>
         </Stack>
       </ToolbarStyle>
     </RootStyle>

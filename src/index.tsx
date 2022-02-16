@@ -5,13 +5,17 @@ import App from './App'
 import { Web3ReactProvider } from '@web3-react/core'
 import getLibrary from './utils/getLibrary'
 
+// scroll bar
+import 'simplebar/src/simplebar.css'
+import { HelmetProvider } from 'react-helmet-async'
+
 ReactDOM.render(
-  <React.Fragment>
+  <HelmetProvider>
     <Web3ReactProvider getLibrary={getLibrary}>
       <HashRouter>
         <App />
       </HashRouter>
     </Web3ReactProvider>
-  </React.Fragment>,
+  </HelmetProvider>,
   document.getElementById('root')
 )
