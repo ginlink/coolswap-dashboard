@@ -45,7 +45,7 @@ export default function ReceiveTokenMoreMenu({ onAction }: { onAction?: (event: 
           <ListItemText primary="Receive" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
 
-        <MenuItem
+        {/* <MenuItem
           component={RouterLink}
           to="#"
           sx={{ color: 'text.secondary' }}
@@ -55,7 +55,7 @@ export default function ReceiveTokenMoreMenu({ onAction }: { onAction?: (event: 
             <Icon icon={editFill} width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
-        </MenuItem>
+        </MenuItem> */}
 
         <MenuItem
           component={RouterLink}
