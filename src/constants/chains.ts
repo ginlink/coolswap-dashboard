@@ -5,6 +5,26 @@ export enum SupportedChainId {
   EVMOS_TEST = 9000,
 }
 
+export const DEFAULT_CHAIN: {
+  chainId: SupportedChainId
+  chainName: string
+  rpcUrls: string
+  nativeCurrency: {
+    name: string
+    symbol: string // 2-6 characters long
+    decimals: 18
+  }
+} = {
+  chainId: SupportedChainId.EVMOS_TEST,
+  chainName: '',
+  rpcUrls: '',
+  nativeCurrency: {
+    name: '',
+    symbol: '',
+    decimals: 18,
+  },
+}
+
 /**
  * Array of all the supported chain IDs
  */
