@@ -3,6 +3,6 @@ import styled from 'styled-components/macro'
 
 const Wrapper = styled.div``
 
-export default function ReceiveToken() {
-  return <Wrapper>ReceiveToken</Wrapper>
+export default function Login() {
+  return <Wrapper>Login</Wrapper>
 }

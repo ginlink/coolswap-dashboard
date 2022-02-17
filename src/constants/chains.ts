@@ -11,3 +11,7 @@ export enum SupportedChainId {
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(SupportedChainId).filter(
   (id) => typeof id === 'number'
 ) as SupportedChainId[]
+
+export const NETWORK_LABELS: { [chainId in SupportedChainId | number]: string } = {
+  [SupportedChainId.EVMOS_TEST]: 'EVMOS_TEST',
+}

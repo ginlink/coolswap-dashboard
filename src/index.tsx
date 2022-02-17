@@ -1,20 +1,21 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
-import CssBaseline from '@mui/material/CssBaseline'
 import { HashRouter } from 'react-router-dom'
 import App from './App'
 import { Web3ReactProvider } from '@web3-react/core'
 import getLibrary from './utils/getLibrary'
 
+// scroll bar
+import 'simplebar/src/simplebar.css'
+import { HelmetProvider } from 'react-helmet-async'
+
 ReactDOM.render(
-  <React.Fragment>
+  <HelmetProvider>
     <Web3ReactProvider getLibrary={getLibrary}>
       <HashRouter>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
         <App />
       </HashRouter>
     </Web3ReactProvider>
-  </React.Fragment>,
+  </HelmetProvider>,
   document.getElementById('root')
 )
