@@ -5,17 +5,16 @@ name: build_and_deploy_web_to_110.99
 
 on: workflow_dispatch
 
-environment: deployEnv
-env:
-  DOCKER_ACCESS_NAME: ${{ secrets.DOCKER_ACCESS_NAME }}
-  DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-  HOST_IP_99: ${{ secrets.HOST_IP_99 }}
-  HOST_ADMIN_99: ${{ secrets.HOST_ADMIN_99 }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: deployEnv
+    env:
+      DOCKER_ACCESS_NAME: ${{ secrets.DOCKER_ACCESS_NAME }}
+      DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+      PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      HOST_IP_99: ${{ secrets.HOST_IP_99 }}
+      HOST_ADMIN_99: ${{ secrets.HOST_ADMIN_99 }}
 
     strategy:
       matrix:
