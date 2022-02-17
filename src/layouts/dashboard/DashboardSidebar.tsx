@@ -4,7 +4,7 @@ import { Link as RouterLink, useLocation } from 'react-router-dom'
 import logo from '@/assets/images/cool.jpg'
 // material
 import { styled } from '@mui/material/styles'
-import { Box, Link, Button, Drawer, Typography, Stack } from '@mui/material'
+import { Box, Drawer } from '@mui/material'
 // components
 // import Logo from '../../components/Logo'
 import Scrollbar from '../../components/Scrollbar'
@@ -29,14 +29,6 @@ const RootStyle = styled('div')(({ theme }) => ({
 const LogoWrapper = styled('img')({
   height: '40px',
 })
-
-const AccountStyle = styled('div')(({ theme }: { theme: any }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(2, 2.5),
-  borderRadius: theme.shape.borderRadiusSm,
-  backgroundColor: theme.palette.grey[200],
-}))
 
 // ----------------------------------------------------------------------
 
@@ -73,12 +65,6 @@ export default function DashboardSidebar({
           <LogoWrapper src={logo} />
         </Box>
       </Box>
-
-      {/* <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" component={RouterLink} to="#">
-          account
-        </Link>
-      </Box> */}
 
       <NavSection navConfig={sidebarConfig} />
 

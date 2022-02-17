@@ -15,6 +15,7 @@ import { MHidden } from '../../components/@material-extend'
 import React from 'react'
 import { useActiveWeb3React } from '@/hooks/web3'
 import { shortenAddress } from '@/utils'
+import { NETWORK_LABELS } from '@/constants/chains'
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +49,7 @@ DashboardNavbar.propTypes = {
 }
 
 export default function DashboardNavbar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
 
   return (
     <RootStyle>
@@ -63,6 +64,8 @@ export default function DashboardNavbar({ onOpenSidebar }: { onOpenSidebar: () =
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
+          <Box>{chainId && <Typography>{NETWORK_LABELS[chainId]}</Typography>}</Box>
+
           <Box sx={{ p: 2, pt: 1.5 }}>
             {account ? (
               <Button fullWidth color="inherit" variant="outlined">
