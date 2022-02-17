@@ -128,7 +128,7 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof ReceiveTokenDataItem>('id')
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const handleRequestSort = useCallback(
     (event: React.MouseEvent<unknown>, property: keyof ReceiveTokenDataItem) => {
