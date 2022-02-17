@@ -5,7 +5,6 @@ import { Web3Provider } from '@ethersproject/providers'
 import { isAddress } from '@/utils'
 
 import ERC20_ABI from '@/abis/erc20.json'
-
 import { AddressMap } from '@/constants/address'
 
 import { Erc20 } from '@/abis/types'

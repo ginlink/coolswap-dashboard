@@ -42,15 +42,15 @@ export default function Web3ReactManager({ children }: { children: JSX.Element }
   }
 
   // if the account context isn't active, and there's an error on the network context, it's an irrecoverable error
-  if (!active) {
-    return (
-      <MessageWrapper>
-        <Message>
-          Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device.
-        </Message>
-      </MessageWrapper>
-    )
-  }
+  // if (!active) {
+  //   return (
+  //     <MessageWrapper>
+  //       <Message>
+  //         Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device.
+  //       </Message>
+  //     </MessageWrapper>
+  //   )
+  // }
 
   return children
 }
