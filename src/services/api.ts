@@ -7,6 +7,7 @@ export type TokenListItem = {
   address: string
   symbol: string
   left_amount: string
+  left_native: string
   admin: string
 }
 

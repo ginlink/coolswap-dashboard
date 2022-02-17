@@ -1,8 +1,8 @@
 import EmptyList from '@/components/EmptyList'
+import { computeNumUnitAdapter } from '@/utils/formatNum'
 import { getComparator, Order } from '@/utils/sort'
 import {
   Box,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -11,6 +11,7 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
+  Typography,
 } from '@mui/material'
 import { visuallyHidden } from '@mui/utils'
 import React, { useCallback, useState, useMemo } from 'react'
@@ -22,6 +23,7 @@ export type ReceiveTokenDataItem = {
   address: string
   symbol: string
   left_amount: string
+  left_native: string
   admin: string
 }
 
@@ -62,6 +64,12 @@ const headCells: readonly HeadCell[] = [
     numeric: false,
     disablePadding: false,
     label: 'left_amount',
+  },
+  {
+    id: 'left_native',
+    numeric: false,
+    disablePadding: false,
+    label: 'left_native',
   },
   {
     id: 'admin',
@@ -173,7 +181,11 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
                     <TableCell align="left">{row.chain_id}</TableCell>
                     <TableCell align="left">{row.address}</TableCell>
                     <TableCell align="left">{row.symbol}</TableCell>
-                    <TableCell align="left">{row.left_amount}</TableCell>
+                    {/* <TableCell align="left" color="success.main"> */}
+                    <TableCell align="left">
+                      <Typography color="success.dark">{computeNumUnitAdapter(row.left_amount)}</Typography>
+                    </TableCell>
+                    <TableCell align="left">{computeNumUnitAdapter(row.left_native)}</TableCell>
                     <TableCell align="left">{row.admin}</TableCell>
                     <TableCell align="right">
                       <MoreMenu onAction={(e, state) => onAction && onAction(e, state, row)} />

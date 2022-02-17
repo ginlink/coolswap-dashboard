@@ -13,7 +13,6 @@ import {
   DialogContentText,
   DialogTitle,
   Input,
-  Paper,
   Snackbar,
   Stack,
   Tooltip,
@@ -37,23 +36,6 @@ import { ActionState } from './ReceiveTokenMoreMenu'
 import DeleteDialog from '@/components/Dialog/DeleteDialog'
 import { UNKNOWN_ERROR_STR } from '@/constants/misc'
 import Scrollbar from '@/components/Scrollbar'
-
-const Wrapper = styled.div``
-const StyledPaper = styled(Paper)`
-  padding: 20px;
-`
-
-const style = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  // border: '2px solid #000',
-  boxShadow: 24,
-  p: 2,
-}
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -227,7 +209,7 @@ export default function ReceiveToken() {
           <DialogContent>
             <Box>
               <Typography component="div" variant="body1">
-                Receive Token: {symbol}({address && shortenAddress(address)})
+                Receive Token: <strong>{symbol}</strong> ({address && shortenAddress(address)})
               </Typography>
               <Typography component="div" variant="body1">
                 Receive Amount: {DEFAULT_RECEIVE_AMOUNT}
