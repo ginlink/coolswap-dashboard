@@ -1,22 +1,10 @@
-import React from 'react'
-import { useWeb3React } from '@web3-react/core'
-import styled from 'styled-components/macro'
+// import React, { useCallback, useEffect } from 'react'
+// import { useWeb3React } from '@web3-react/core'
 
 import { useEagerConnect, useInactiveListener } from '../../hooks/web3'
 
-const MessageWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 20rem;
-`
-
-const Message = styled.h2`
-  color: ${({ theme }) => theme.secondary1};
-`
-
 export default function Web3ReactManager({ children }: { children: JSX.Element }) {
-  const { active } = useWeb3React()
+  // const { active } = useWeb3React()
 
   // try to eagerly connect to an injected provider, if it exists and has granted access already
   const triedEager = useEagerConnect()
@@ -35,6 +23,38 @@ export default function Web3ReactManager({ children }: { children: JSX.Element }
   //     clearTimeout(timeout)
   //   }
   // }, [])
+
+  // const changeToDefaultNetwork = useCallback(async () => {
+  //   const ethereum = window.ethereum as any
+  //   if (!ethereum) return
+
+  //   try {
+  //     await ethereum.request({
+  //       method: 'wallet_switchEthereumChain',
+  //       params: [{ chainId: '0xf00' }],
+  //     })
+  //   } catch (switchError: any) {
+  //     // This error code indicates that the chain has not been added to MetaMask.
+  //     if (switchError.code === 4902) {
+  //       try {
+  //         await ethereum.request({
+  //           method: 'wallet_addEthereumChain',
+  //           params: [DEFAULT_CHAIN],
+  //         })
+  //       } catch (addError) {
+  //         // handle "add" error
+  //       }
+  //     }
+  //     // handle other "switch" errors
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+  //   if (active) {
+  //     // auto switch to default chain
+  //     changeToDefaultNetwork()
+  //   }
+  // }, [active, changeToDefaultNetwork])
 
   // on page load, do nothing until we've tried to connect to the injected connector
   if (!triedEager) {
