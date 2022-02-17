@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  coolswap-api:
+    image: ginlink/coolswap-api:latest
+    container_name: coolswap-api
+    restart: always
+    ports:
+      - '3050:3050'
+    privileged: true
+    env_file:
+      - ./env.list
+
+  coolswap-dashboard:
+    image: ginlink/coolswap-dashboard:latest
+    container_name: coolswap-dashboard
+    restart: always
+    ports:
+      - '3051:80'
+    privileged: true
+
+networks:
+  lend_default:
+    driver: bridge
