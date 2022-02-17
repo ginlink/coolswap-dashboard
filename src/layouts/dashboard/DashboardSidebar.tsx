@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
+import logo from '@/assets/images/cool.jpg'
 // material
 import { styled } from '@mui/material/styles'
 import { Box, Link, Button, Drawer, Typography, Stack } from '@mui/material'
@@ -24,6 +25,10 @@ const RootStyle = styled('div')(({ theme }) => ({
     width: DRAWER_WIDTH,
   },
 }))
+
+const LogoWrapper = styled('img')({
+  height: '40px',
+})
 
 const AccountStyle = styled('div')(({ theme }: { theme: any }) => ({
   display: 'flex',
@@ -65,8 +70,7 @@ export default function DashboardSidebar({
     >
       <Box sx={{ px: 2.5, py: 3 }}>
         <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
-          logo
-          {/* <Logo /> */}
+          <LogoWrapper src={logo} />
         </Box>
       </Box>
 
