@@ -33,3 +33,6 @@ export function createReceiveTokenApi(chain_id: string, address: string, private
     private_key,
   }) as Promise<any>
 }
+export function deleteReceiveTokenApi(id: number, private_key: string) {
+  return http.delete(`/token/${id}`, private_key) as Promise<any>
+}

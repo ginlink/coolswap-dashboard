@@ -1,3 +1,4 @@
+import { UNKNOWN_ERROR_STR } from '@/constants/misc'
 import axios, { AxiosInstance } from 'axios'
 import { BASE_URL } from './config'
 
@@ -22,6 +23,7 @@ instance.interceptors.response.use(
     const response = err.response
 
     const errCode = response?.status
+    const errMsg = response?.data?.msg
 
     switch (errCode) {
       case 400:
@@ -56,8 +58,10 @@ instance.interceptors.response.use(
         console.log('Network timeout')
         break
       default:
-        console.log('Unknown error', errCode, err)
+        console.log(UNKNOWN_ERROR_STR, errCode, err)
     }
+
+    throw Error(errMsg || UNKNOWN_ERROR_STR)
   }
 )
 
@@ -71,8 +75,12 @@ export default {
   put: (url: string, data: any): Promise<any> => {
     return instance.put(url, data)
   },
-  delete: (url: string): Promise<any> => {
-    return instance.delete(url)
+  delete: (url: string, private_key: string): Promise<any> => {
+    return instance.delete(url, {
+      data: {
+        private_key,
+      },
+    })
   },
   patch: (url: string, params: any): Promise<any> => {
     return instance.patch(url, params)

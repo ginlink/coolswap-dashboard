@@ -7,13 +7,18 @@ import React from 'react'
 // material
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material'
 
-// import editFill from '@iconify/icons-eva/edit-fill'
-// import trash2Outline from '@iconify/icons-eva/trash-2-outline'
+import editFill from '@iconify/icons-eva/edit-fill'
+import trash2Outline from '@iconify/icons-eva/trash-2-outline'
 // import archiveOutline from '@iconify/icons-eva/archive-outline'
 
 // ----------------------------------------------------------------------
 
-export default function ReceiveTokenMoreMenu({ onReceiveClick }: { onReceiveClick?: (event: unknown) => void }) {
+export enum ActionState {
+  RECEIVE,
+  EDIT,
+  DELETE,
+}
+export default function ReceiveTokenMoreMenu({ onAction }: { onAction?: (event: any, state: ActionState) => void }) {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -33,19 +38,36 @@ export default function ReceiveTokenMoreMenu({ onReceiveClick }: { onReceiveClic
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem sx={{ color: 'text.secondary' }} onClick={onReceiveClick}>
+        <MenuItem sx={{ color: 'text.secondary' }} onClick={(e: any) => onAction && onAction(e, ActionState.RECEIVE)}>
           <ListItemIcon>
             <Icon icon={giftOutline} width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Receive" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
 
-        {/* <MenuItem component={RouterLink} to="#" sx={{ color: 'text.secondary' }}>
+        <MenuItem
+          component={RouterLink}
+          to="#"
+          sx={{ color: 'text.secondary' }}
+          onClick={(e: any) => onAction && onAction(e, ActionState.EDIT)}
+        >
           <ListItemIcon>
             <Icon icon={editFill} width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
-        </MenuItem> */}
+        </MenuItem>
+
+        <MenuItem
+          component={RouterLink}
+          to="#"
+          sx={{ color: 'text.secondary' }}
+          onClick={(e: any) => onAction && onAction(e, ActionState.DELETE)}
+        >
+          <ListItemIcon>
+            <Icon icon={trash2Outline} width={24} height={24} />
+          </ListItemIcon>
+          <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
+        </MenuItem>
       </Menu>
     </>
   )

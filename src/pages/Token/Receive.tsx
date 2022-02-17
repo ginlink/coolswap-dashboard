@@ -1,6 +1,8 @@
 import ReceiveForm from '@/components/ReceiveForm'
-import { createReceiveTokenApi, receiveTokenApi, tokenListApi } from '@/services/api'
+import { createReceiveTokenApi, deleteReceiveTokenApi, receiveTokenApi, tokenListApi } from '@/services/api'
 import {
+  Alert,
+  AlertColor,
   Box,
   Button,
   Card,
@@ -12,6 +14,7 @@ import {
   DialogTitle,
   Input,
   Paper,
+  Snackbar,
   Stack,
   Tooltip,
   tooltipClasses,
@@ -30,6 +33,10 @@ import { shortenAddress } from '@/utils'
 import { Link as RouterLink } from 'react-router-dom'
 import Page from '@/components/Page'
 import CreateDialog from '@/components/Dialog/CreateDialog'
+import { ActionState } from './ReceiveTokenMoreMenu'
+import DeleteDialog from '@/components/Dialog/DeleteDialog'
+import { UNKNOWN_ERROR_STR } from '@/constants/misc'
+import Scrollbar from '@/components/Scrollbar'
 
 const Wrapper = styled.div``
 const StyledPaper = styled(Paper)`
@@ -71,6 +78,25 @@ export default function ReceiveToken() {
   const [hash, setHash] = useState<string | undefined>()
   const [symbol, setSymbol] = useState<string>()
   const [address, setAddress] = useState<string>()
+  const [messageBoxOpen, setMessageBoxOpen] = useState(false)
+  const [message, setMessage] = useState('')
+  const [severity, setSeverity] = useState<AlertColor>('success')
+  const [autoHideDuration, setAutoHideDuration] = useState(3000)
+  const [deleteTokenOpen, setDeleteTokenOpen] = useState(false)
+  const [deleteId, setDeleteId] = useState<number>()
+
+  const alertSuccessMessage = useCallback((message: string, duration = 3000) => {
+    setSeverity('success')
+    setMessage(message)
+    setMessageBoxOpen(true)
+    setAutoHideDuration(duration)
+  }, [])
+  const alertErrorMessage = useCallback((message: string, duration = 3000) => {
+    setSeverity('error')
+    setMessage(message)
+    setMessageBoxOpen(true)
+    setAutoHideDuration(duration)
+  }, [])
 
   const updateTokenList = useCallback(() => {
     tokenListApi()
@@ -82,14 +108,28 @@ export default function ReceiveToken() {
       })
   }, [])
 
-  const handleReceiveClick = useCallback((row: ReceiveTokenDataItem) => {
-    const { address, symbol } = row
-    setAddress(address)
-    setSymbol(symbol)
+  const handleReceiveAction = useCallback(
+    async (e, state: ActionState, row: ReceiveTokenDataItem) => {
+      const { address, symbol, id } = row
 
-    setTokenAddress(address)
-    setOpen(true)
-  }, [])
+      try {
+        if (state === ActionState.RECEIVE) {
+          setAddress(address)
+          setSymbol(symbol)
+
+          setTokenAddress(address)
+          setOpen(true)
+        } else if (state === ActionState.EDIT) {
+        } else if (state === ActionState.DELETE) {
+          setDeleteId(id)
+          setDeleteTokenOpen(true)
+        }
+      } catch (err: any) {
+        alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
+      }
+    },
+    [alertErrorMessage]
+  )
 
   const handleSubmit = useCallback(
     async (values) => {
@@ -102,16 +142,19 @@ export default function ReceiveToken() {
 
         const res = await receiveTokenApi(receive, token_address, amount)
 
+        // alertSuccessMessage('Receive success')
+
         setHash(res.hash)
         setOpen(false)
         setDialogOpen(true)
-      } catch (err) {
+      } catch (err: any) {
         console.log('[err]:', err)
+        alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
       }
     },
-    [tokenAddress]
+    [alertErrorMessage, tokenAddress]
   )
-  const handleSubmitCreateDialog = useCallback(
+  const handleSubmitCreate = useCallback(
     async (values: { chain_id: string; address: string; private_key: string }) => {
       try {
         const { chain_id, address, private_key } = values
@@ -120,11 +163,34 @@ export default function ReceiveToken() {
 
         updateTokenList()
         setCreateTokenOpen(false)
-      } catch (err) {
+        alertSuccessMessage('Create success')
+      } catch (err: any) {
         console.log('[err]:', err)
+        alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
       }
     },
-    [updateTokenList]
+    [alertErrorMessage, alertSuccessMessage, updateTokenList]
+  )
+  const handleSubmitDelete = useCallback(
+    async (values: { private_key: string }) => {
+      try {
+        if (!deleteId) {
+          return alertErrorMessage('Invalid delete id')
+        }
+
+        const { private_key } = values
+        const id = deleteId
+
+        await deleteReceiveTokenApi(id, private_key)
+        alertSuccessMessage('Delete success')
+        updateTokenList()
+        setDeleteTokenOpen(false)
+      } catch (err: any) {
+        console.log('[err]:', err)
+        alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
+      }
+    },
+    [alertErrorMessage, alertSuccessMessage, deleteId, updateTokenList]
   )
 
   useEffect(() => {
@@ -134,11 +200,6 @@ export default function ReceiveToken() {
   return (
     <Page title="Receive Token | Coolswap">
       <Container>
-        {/* <StyledPaper elevation={0}>
-        <Stack direction="row" spacing={2}>
-          Receive Header
-        </Stack>
-      </StyledPaper> */}
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Receive Token
@@ -155,11 +216,9 @@ export default function ReceiveToken() {
         </Stack>
 
         <Card>
-          <StyledPaper elevation={0} sx={{ marginTop: '10px' }}>
-            <div style={{ height: 300, width: '100%' }}>
-              <ReceiveTokenTable dataList={receiveTokenList} onReceiveClick={handleReceiveClick} />
-            </div>
-          </StyledPaper>
+          <Scrollbar>
+            <ReceiveTokenTable dataList={receiveTokenList} onAction={handleReceiveAction} />
+          </Scrollbar>
         </Card>
 
         <Dialog onClose={() => setOpen((prev) => !prev)} open={open}>
@@ -228,13 +287,22 @@ export default function ReceiveToken() {
             </Button>
           </DialogActions>
         </Dialog>
-
-        <CreateDialog
-          open={createTokenOpen}
-          onClose={() => setCreateTokenOpen(false)}
-          onSubmit={handleSubmitCreateDialog}
-        />
       </Container>
+
+      <CreateDialog open={createTokenOpen} onClose={() => setCreateTokenOpen(false)} onSubmit={handleSubmitCreate} />
+
+      <DeleteDialog open={deleteTokenOpen} onClose={() => setDeleteTokenOpen(false)} onSubmit={handleSubmitDelete} />
+
+      <Snackbar
+        open={messageBoxOpen}
+        autoHideDuration={autoHideDuration}
+        onClose={() => setMessageBoxOpen(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert onClose={() => setMessageBoxOpen(false)} severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </Page>
   )
 }

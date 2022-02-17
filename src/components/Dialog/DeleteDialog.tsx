@@ -1,8 +1,8 @@
 import { Dialog, DialogContent, DialogTitle, Paper, Typography } from '@mui/material'
-import CreateTokenForm from './CreateTokenForm'
 import React from 'react'
+import DeleteTokenForm from './DelteTokenForm'
 
-export default function CreateDialog({
+export default function DeleteDialog({
   open,
   onClose,
   onSubmit,
@@ -14,13 +14,16 @@ export default function CreateDialog({
   return (
     <Paper>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Create</DialogTitle>
+        <DialogTitle>Delete</DialogTitle>
         <DialogContent>
-          <Typography variant="subtitle2" sx={{ maxWidth: '400px' }}>
+          <Typography variant="subtitle2">Enter private key for verifying</Typography>
+
+          <DeleteTokenForm onSubmit={onSubmit} />
+
+          <Typography variant="subtitle2" sx={{ maxWidth: '400px', mt: 2 }}>
             Notice: Please use the private key of the test account. Otherwise there is a risk that the funds will be
             stolen!
           </Typography>
-          <CreateTokenForm onSubmit={onSubmit} />
         </DialogContent>
       </Dialog>
     </Paper>

@@ -14,7 +14,7 @@ import {
 } from '@mui/material'
 import { visuallyHidden } from '@mui/utils'
 import React, { useCallback, useState, useMemo } from 'react'
-import MoreMenu from './ReceiveTokenMoreMenu'
+import MoreMenu, { ActionState } from './ReceiveTokenMoreMenu'
 
 export type ReceiveTokenDataItem = {
   id: number
@@ -36,7 +36,7 @@ const headCells: readonly HeadCell[] = [
   {
     id: 'id',
     numeric: true,
-    disablePadding: true,
+    disablePadding: false,
     label: 'id',
   },
   {
@@ -85,21 +85,9 @@ function MyTableHead({ order, orderBy, onRequestSort }: MyTableHeaderProps) {
   return (
     <TableHead>
       <TableRow>
-        {/* <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          />
-        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            // align={headCell.numeric ? 'right' : 'left'}
             align={'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
@@ -125,10 +113,10 @@ function MyTableHead({ order, orderBy, onRequestSort }: MyTableHeaderProps) {
 
 type ReceiveTokenTableProps = {
   dataList?: ReceiveTokenDataItem[]
-  onReceiveClick?: (row: ReceiveTokenDataItem) => void
+  onAction?: (e: any, state: ActionState, row: ReceiveTokenDataItem) => void
 }
 
-export default function ReceiveTokenTable({ dataList: rows, onReceiveClick }: ReceiveTokenTableProps) {
+export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveTokenTableProps) {
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof ReceiveTokenDataItem>('id')
   const [page, setPage] = useState(0)
@@ -166,72 +154,64 @@ export default function ReceiveTokenTable({ dataList: rows, onReceiveClick }: Re
   }, [rows])
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <MyTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
-            <TableBody>
-              {rows
-                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .sort(getComparator(order, orderBy))
-                .map((row, index) => {
-                  const labelId = `my-table-checkbox-${index}`
+    <>
+      <TableContainer>
+        <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+          <MyTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
+          <TableBody>
+            {rows
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .sort(getComparator(order, orderBy))
+              .map((row, index) => {
+                const labelId = `my-table-checkbox-${index}`
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={() => onReceiveClick && onReceiveClick(row)}
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.id}
-                    >
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.id}
-                      </TableCell>
-                      <TableCell align="left">{row.chain_id}</TableCell>
-                      <TableCell align="left">{row.address}</TableCell>
-                      <TableCell align="left">{row.symbol}</TableCell>
-                      <TableCell align="left">{row.left_amount}</TableCell>
-                      <TableCell align="left">{row.admin}</TableCell>
-                      <TableCell align="right">
-                        <MoreMenu onReceiveClick={() => onReceiveClick && onReceiveClick(row)} />
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: 53 * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-
-            {isEmptyList && (
-              <TableBody>
-                <TableRow>
-                  <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                    <EmptyList />
-                  </TableCell>
-                </TableRow>
-              </TableBody>
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                    <TableCell component="th" id={labelId} scope="row">
+                      {row.id}
+                    </TableCell>
+                    <TableCell align="left">{row.chain_id}</TableCell>
+                    <TableCell align="left">{row.address}</TableCell>
+                    <TableCell align="left">{row.symbol}</TableCell>
+                    <TableCell align="left">{row.left_amount}</TableCell>
+                    <TableCell align="left">{row.admin}</TableCell>
+                    <TableCell align="right">
+                      <MoreMenu onAction={(e, state) => onAction && onAction(e, state, row)} />
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            {emptyRows > 0 && (
+              <TableRow
+                style={{
+                  height: 53 * emptyRows,
+                }}
+              >
+                <TableCell colSpan={6} />
+              </TableRow>
             )}
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows?.length ?? 0}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </Box>
+          </TableBody>
+
+          {isEmptyList && (
+            <TableBody>
+              <TableRow>
+                <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                  <EmptyList />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={rows?.length ?? 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </>
   )
 }
