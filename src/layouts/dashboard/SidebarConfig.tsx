@@ -27,11 +27,11 @@ const sidebarConfig = [
     path: '/dashboard/token/receive',
     icon: getIcon(peopleFill),
   },
-  {
-    title: 'Create Token',
-    path: '/dashboard/token/create',
-    icon: getIcon(shoppingBagFill),
-  },
+  // {
+  //   title: 'Create Token',
+  //   path: '/dashboard/token/create',
+  //   icon: getIcon(shoppingBagFill),
+  // },
 ]
 
 export default sidebarConfig
