@@ -5,6 +5,7 @@ name: build_web_to_110.99
 
 on: workflow_dispatch
 
+environment: deployEnv
 env:
   DOCKER_ACCESS_NAME: ${{ secrets.DOCKER_ACCESS_NAME }}
   DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
