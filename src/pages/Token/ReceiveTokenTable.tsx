@@ -93,6 +93,10 @@ function MyTableHead({ order, orderBy, onRequestSort }: MyTableHeaderProps) {
   return (
     <TableHead>
       <TableRow>
+        <TableCell key={'action'} align={'left'} padding={'normal'}>
+          Action
+        </TableCell>
+
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -175,6 +179,9 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
 
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                    <TableCell align="right">
+                      <MoreMenu onAction={(e, state) => onAction && onAction(e, state, row)} />
+                    </TableCell>
                     <TableCell component="th" id={labelId} scope="row">
                       {row.id}
                     </TableCell>
@@ -187,9 +194,6 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
                     </TableCell>
                     <TableCell align="left">{computeNumUnitAdapter(row.left_native)}</TableCell>
                     <TableCell align="left">{row.admin}</TableCell>
-                    <TableCell align="right">
-                      <MoreMenu onAction={(e, state) => onAction && onAction(e, state, row)} />
-                    </TableCell>
                   </TableRow>
                 )
               })}
