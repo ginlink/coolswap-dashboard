@@ -1,5 +1,4 @@
 import SendTokenForm from '@/components/SendTokenForm'
-import { shortenAddress } from '@/utils'
 import { Dialog, DialogContent, DialogTitle, Paper, Typography } from '@mui/material'
 import React, { useMemo } from 'react'
 import { ReceiveTokenDataItem } from './ReceiveTokenTable'
@@ -15,7 +14,7 @@ export default function CreateDialog({
   onClose: () => void
   onSubmit: (values: any) => void
 }) {
-  const { address, symbol, admin } = useMemo(() => row, [row]) || {}
+  const { address, symbol, admin, chain_id } = useMemo(() => row, [row]) || {}
 
   return (
     <Paper>
@@ -23,10 +22,13 @@ export default function CreateDialog({
         <DialogTitle>Send {symbol}</DialogTitle>
         <DialogContent>
           <Typography variant="body2" sx={{ maxWidth: '400px' }}>
-            Token: {address}
+            Chain id: <strong>{chain_id}</strong>
           </Typography>
           <Typography variant="body2" sx={{ maxWidth: '400px' }}>
-            Receiver: {admin}
+            Token: <strong>{address}</strong>
+          </Typography>
+          <Typography variant="body2" sx={{ maxWidth: '400px' }}>
+            Receiver: <strong>{admin}</strong>
           </Typography>
           <SendTokenForm onSubmit={onSubmit} />
         </DialogContent>

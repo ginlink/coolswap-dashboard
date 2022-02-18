@@ -80,13 +80,12 @@ export default function ReceiveToken() {
   )
 
   const handleSubmitReceive = useCallback(
-    async (values) => {
+    async (values: { address: string; amount: string }) => {
       try {
         if (!currentRow) return
 
-        const { address: receive } = values
+        const { address: receive, amount } = values
         const { address: token_address } = currentRow
-        const amount = String(DEFAULT_RECEIVE_AMOUNT)
 
         const res = await receiveTokenApi(receive, token_address, amount)
 
