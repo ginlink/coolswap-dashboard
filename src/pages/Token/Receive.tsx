@@ -9,10 +9,15 @@ import Page from '@/components/Page'
 import CreateDialog from '@/components/Dialog/CreateDialog'
 import { ActionState } from './ReceiveTokenMoreMenu'
 import DeleteDialog from '@/components/Dialog/DeleteDialog'
-import { UNKNOWN_ERROR_STR } from '@/constants/misc'
+import { CHAIN_MATCH_ERROR_STR, CONNECT_ERROR_STR, UNKNOWN_ERROR_STR } from '@/constants/misc'
 import Scrollbar from '@/components/Scrollbar'
 import ReceiveSuccessDialog from './ReceiveSuccessDialog'
 import ReceiveDialog from './ReceiveDialog'
+import SendDialog from './SendDialog'
+import { Contract, ethers } from 'ethers'
+import ERC20_ABI from '@/abis/erc20.json'
+import { useActiveWeb3React } from '@/hooks/web3'
+import { Erc20 } from '@/abis/types'
 
 export const DEFAULT_RECEIVE_AMOUNT = 1000
 
@@ -28,6 +33,9 @@ export default function ReceiveToken() {
   const [severity, setSeverity] = useState<AlertColor>('success')
   const [autoHideDuration, setAutoHideDuration] = useState(3000)
   const [deleteTokenOpen, setDeleteTokenOpen] = useState(false)
+  const [sendTokenOpen, setSendTokenOpen] = useState(false)
+
+  const { account, library, chainId } = useActiveWeb3React()
 
   const alertSuccessMessage = useCallback((message: string, duration = 3000) => {
     setSeverity('success')
@@ -61,6 +69,8 @@ export default function ReceiveToken() {
           setReceiveOpen(true)
         } else if (state === ActionState.DELETE) {
           setDeleteTokenOpen(true)
+        } else if (state === ActionState.SEND) {
+          setSendTokenOpen(true)
         }
       } catch (err: any) {
         alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
@@ -69,7 +79,7 @@ export default function ReceiveToken() {
     [alertErrorMessage]
   )
 
-  const handleSubmit = useCallback(
+  const handleSubmitReceive = useCallback(
     async (values) => {
       try {
         if (!currentRow) return
@@ -92,6 +102,46 @@ export default function ReceiveToken() {
     },
     [alertErrorMessage, currentRow]
   )
+
+  const handleSubmitSend = useCallback(
+    async (values: { amount: string }) => {
+      try {
+        debugger
+        if (!currentRow) {
+          return alertErrorMessage(UNKNOWN_ERROR_STR)
+        }
+
+        if (!account || !library) {
+          return alertErrorMessage(CONNECT_ERROR_STR)
+        }
+
+        const { amount } = values
+        const { address, admin, chain_id } = currentRow
+
+        if (!chain_id || chain_id != chainId) {
+          return alertErrorMessage(CHAIN_MATCH_ERROR_STR)
+        }
+
+        const signer = library.getSigner()
+
+        // send token
+        const tokenContract = new Contract(address, ERC20_ABI.abi, signer) as Erc20
+
+        const _amount = ethers.utils.parseUnits(amount, 18)
+        const { wait } = await tokenContract.transfer(admin, _amount)
+
+        await wait()
+
+        setSendTokenOpen(false)
+        alertSuccessMessage('Send success')
+      } catch (err: any) {
+        console.log('[err]:', err)
+        alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
+      }
+    },
+    [account, alertErrorMessage, alertSuccessMessage, chainId, currentRow, library]
+  )
+
   const handleSubmitCreate = useCallback(
     async (values: { chain_id: string; address: string; private_key: string }) => {
       try {
@@ -109,6 +159,7 @@ export default function ReceiveToken() {
     },
     [alertErrorMessage, alertSuccessMessage, updateTokenList]
   )
+
   const handleSubmitDelete = useCallback(
     async (values: { private_key: string }) => {
       try {
@@ -163,7 +214,7 @@ export default function ReceiveToken() {
       <ReceiveDialog
         open={receiveOpen}
         onClose={() => setReceiveOpen((prev) => !prev)}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitReceive}
         row={currentRow}
       />
 
@@ -171,6 +222,13 @@ export default function ReceiveToken() {
         open={receiveSuccessOpen}
         hash={hash}
         onClose={() => setReceiveSuccessOpen((prev) => !prev)}
+      />
+
+      <SendDialog
+        open={sendTokenOpen}
+        onClose={() => setSendTokenOpen((prev) => !prev)}
+        onSubmit={handleSubmitSend}
+        row={currentRow}
       />
 
       <CreateDialog open={createTokenOpen} onClose={() => setCreateTokenOpen(false)} onSubmit={handleSubmitCreate} />
