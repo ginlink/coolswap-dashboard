@@ -219,6 +219,7 @@ export default function ReceiveToken() {
 
       <ReceiveSuccessDialog
         open={receiveSuccessOpen}
+        title={'Receive Success'}
         hash={hash}
         onClose={() => setReceiveSuccessOpen((prev) => !prev)}
       />
