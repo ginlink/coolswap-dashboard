@@ -1,22 +1,43 @@
 import { useActiveWeb3React } from '@/hooks/web3'
-import { Container, Grid, Stack, Typography } from '@mui/material'
+import { Button, Card, Container, Stack, Typography } from '@mui/material'
 import { ethers } from 'ethers'
 import Erc20_Bytecode from '@/bytecodes/rec20.json'
 import Erc20_Abi from '@/abis/erc20.json'
 import React, { useCallback, useEffect, useState } from 'react'
-import DeployTokenForm from './DeployTokenForm'
 import Page from '@/components/Page'
 import ReceiveSuccessDialog from './ReceiveSuccessDialog'
-import { UNKNOWN_ERROR_STR } from '@/constants/misc'
+import { CONNECT_ERROR, CONNECT_ERROR_STR, NO_PERMISSION_ERROR, UNKNOWN_ERROR_STR } from '@/constants/misc'
 import { useSnackbar } from '@/hooks/useSnackbar'
-import { createTokenApi, TokenListItem } from '@/services/token'
+import { createTokenApi, deleteTokenApi, tokenListApi, TokenListItem } from '@/services/token'
+import { Link as RouterLink } from 'react-router-dom'
+import { Icon } from '@iconify/react'
+import plusFill from '@iconify/icons-eva/plus-fill'
+import CreateTokenDialog from './CreateTokenDialog'
+import Scrollbar from '@/components/Scrollbar'
+import CreateTokenTable, { TokenDataItem } from './CreateTokenTable'
+import { ActionStateToken } from './MoreMenuToken'
+import { compareAddress } from '@/utils/address'
 
 export default function CreateToken() {
+  const [createTokenList, setCreateTokenList] = useState<TokenListItem[]>()
   const { library, chainId, account } = useActiveWeb3React()
   const [receiveSuccessOpen, setReceiveSuccessOpen] = useState(false)
+  const [createTokenOpen, setCreateTokenOpen] = useState(false)
+  const [currentRow, setCurrentRow] = useState<TokenDataItem>()
   const [hash, setHash] = useState('')
 
   const { alertError, alertSuccess } = useSnackbar()
+
+  const updateTokenList = useCallback(() => {
+    tokenListApi()
+      .then((res) => {
+        setCreateTokenList(res)
+      })
+      .catch((err: any) => {
+        console.log('[err]:', err)
+        alertError(err.message || UNKNOWN_ERROR_STR)
+      })
+  }, [alertError])
 
   const handleSubmitCreate = useCallback(
     async (values: { name: string; symbol: string; decimals: number; total: number; checked: boolean }) => {
@@ -54,20 +75,84 @@ export default function CreateToken() {
           await createTokenApi(data)
         }
 
+        updateTokenList()
+
         setHash(res.transactionHash)
+        setCreateTokenOpen(false)
         setReceiveSuccessOpen(true)
         alertSuccess('Create success')
       } catch (err: any) {
         alertError(err.message || UNKNOWN_ERROR_STR)
       }
     },
-    [account, alertError, alertSuccess, chainId, library]
+    [account, alertError, alertSuccess, chainId, library, updateTokenList]
   )
+
+  const handleDeleteToken = useCallback(
+    async (row: TokenDataItem) => {
+      try {
+        if (!account) {
+          throw CONNECT_ERROR
+        }
+
+        const { creator, id } = row
+
+        if (!compareAddress(account, creator)) {
+          throw NO_PERMISSION_ERROR
+        }
+
+        await deleteTokenApi(id)
+
+        updateTokenList()
+        alertSuccess('Delete success')
+      } catch (err: any) {
+        alertError(err.message || UNKNOWN_ERROR_STR)
+      }
+    },
+    [account, alertError, alertSuccess, updateTokenList]
+  )
+
+  const handleReceiveAction = useCallback(
+    async (e, state: ActionStateToken, row: TokenDataItem) => {
+      debugger
+      try {
+        setCurrentRow(row)
+
+        if (state === ActionStateToken.DELETE) {
+          // setDeleteTokenOpen(true)
+
+          handleDeleteToken(row)
+        }
+      } catch (err: any) {
+        alertError(err.message || UNKNOWN_ERROR_STR)
+      }
+    },
+    [alertError, handleDeleteToken]
+  )
+
+  useEffect(() => {
+    updateTokenList()
+  }, [updateTokenList])
 
   return (
     <Page title="Create Token | Coolswap">
       <Container>
-        <Grid container spacing={2} justifyContent="center">
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+          <Typography variant="h4" gutterBottom>
+            Tokens
+          </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="#"
+            startIcon={<Icon icon={plusFill} />}
+            onClick={() => setCreateTokenOpen(true)}
+          >
+            <Typography variant="body1">Create</Typography>
+          </Button>
+        </Stack>
+
+        {/* <Grid container spacing={2} justifyContent="center">
           <Grid item sm={6} xs={12}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
               <Typography variant="h4" gutterBottom>
@@ -77,8 +162,20 @@ export default function CreateToken() {
 
             <DeployTokenForm onSubmit={handleSubmitCreate} />
           </Grid>
-        </Grid>
+        </Grid> */}
+
+        <Card>
+          <Scrollbar>
+            <CreateTokenTable dataList={createTokenList} onAction={handleReceiveAction} />
+          </Scrollbar>
+        </Card>
       </Container>
+
+      <CreateTokenDialog
+        open={createTokenOpen}
+        onClose={() => setCreateTokenOpen(false)}
+        onSubmit={handleSubmitCreate}
+      />
 
       <ReceiveSuccessDialog
         open={receiveSuccessOpen}

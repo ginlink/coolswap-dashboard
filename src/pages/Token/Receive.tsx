@@ -25,7 +25,7 @@ export default function ReceiveToken() {
   const [receiveTokenList, setReceiveTokenList] = useState<FaucetDataItem[]>()
   const [receiveOpen, setReceiveOpen] = useState(false)
   const [receiveSuccessOpen, setReceiveSuccessOpen] = useState(false)
-  const [createTokenOpen, setCreateTokenOpen] = useState(false)
+  const [createFaucetOpen, setCreateFaucetOpen] = useState(false)
   const [hash, setHash] = useState<string | undefined>()
   const [currentRow, setCurrentRow] = useState<FaucetDataItem>()
   const [messageBoxOpen, setMessageBoxOpen] = useState(false)
@@ -149,7 +149,7 @@ export default function ReceiveToken() {
         await createReceiveTokenApi(chain_id, address, private_key)
 
         updateTokenList()
-        setCreateTokenOpen(false)
+        setCreateFaucetOpen(false)
         alertSuccessMessage('Create success')
       } catch (err: any) {
         console.log('[err]:', err)
@@ -197,7 +197,7 @@ export default function ReceiveToken() {
             component={RouterLink}
             to="#"
             startIcon={<Icon icon={plusFill} />}
-            onClick={() => setCreateTokenOpen(true)}
+            onClick={() => setCreateFaucetOpen(true)}
           >
             <Typography variant="body1">Create</Typography>
           </Button>
@@ -231,7 +231,7 @@ export default function ReceiveToken() {
         row={currentRow}
       />
 
-      <CreateDialog open={createTokenOpen} onClose={() => setCreateTokenOpen(false)} onSubmit={handleSubmitCreate} />
+      <CreateDialog open={createFaucetOpen} onClose={() => setCreateFaucetOpen(false)} onSubmit={handleSubmitCreate} />
 
       <DeleteDialog
         open={deleteTokenOpen}
