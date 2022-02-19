@@ -1,7 +1,7 @@
 import SendTokenForm from '@/components/SendTokenForm'
 import { Dialog, DialogContent, DialogTitle, Paper, Typography } from '@mui/material'
 import React, { useMemo } from 'react'
-import { ReceiveTokenDataItem } from './ReceiveTokenTable'
+import { FaucetDataItem } from './ReceiveTokenTable'
 
 export default function CreateDialog({
   open,
@@ -10,7 +10,7 @@ export default function CreateDialog({
   onSubmit,
 }: {
   open: boolean
-  row: ReceiveTokenDataItem | undefined
+  row: FaucetDataItem | undefined
   onClose: () => void
   onSubmit: (values: any) => void
 }) {

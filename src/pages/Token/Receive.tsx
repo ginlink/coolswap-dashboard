@@ -1,6 +1,6 @@
 import { createReceiveTokenApi, deleteReceiveTokenApi, receiveTokenApi, tokenListApi } from '@/services/api'
 import { Alert, AlertColor, Button, Card, Container, Snackbar, Stack, Typography } from '@mui/material'
-import ReceiveTokenTable, { ReceiveTokenDataItem } from './ReceiveTokenTable'
+import ReceiveTokenTable, { FaucetDataItem } from './ReceiveTokenTable'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Icon } from '@iconify/react'
 import plusFill from '@iconify/icons-eva/plus-fill'
@@ -22,12 +22,12 @@ import { Erc20 } from '@/abis/types'
 export const DEFAULT_RECEIVE_AMOUNT = 1000
 
 export default function ReceiveToken() {
-  const [receiveTokenList, setReceiveTokenList] = useState<ReceiveTokenDataItem[]>()
+  const [receiveTokenList, setReceiveTokenList] = useState<FaucetDataItem[]>()
   const [receiveOpen, setReceiveOpen] = useState(false)
   const [receiveSuccessOpen, setReceiveSuccessOpen] = useState(false)
-  const [createTokenOpen, setCreateTokenOpen] = useState(false)
+  const [createFaucetOpen, setCreateFaucetOpen] = useState(false)
   const [hash, setHash] = useState<string | undefined>()
-  const [currentRow, setCurrentRow] = useState<ReceiveTokenDataItem>()
+  const [currentRow, setCurrentRow] = useState<FaucetDataItem>()
   const [messageBoxOpen, setMessageBoxOpen] = useState(false)
   const [message, setMessage] = useState('')
   const [severity, setSeverity] = useState<AlertColor>('success')
@@ -61,7 +61,7 @@ export default function ReceiveToken() {
   }, [])
 
   const handleReceiveAction = useCallback(
-    async (e, state: ActionState, row: ReceiveTokenDataItem) => {
+    async (e, state: ActionState, row: FaucetDataItem) => {
       try {
         setCurrentRow(row)
 
@@ -149,7 +149,7 @@ export default function ReceiveToken() {
         await createReceiveTokenApi(chain_id, address, private_key)
 
         updateTokenList()
-        setCreateTokenOpen(false)
+        setCreateFaucetOpen(false)
         alertSuccessMessage('Create success')
       } catch (err: any) {
         console.log('[err]:', err)
@@ -197,7 +197,7 @@ export default function ReceiveToken() {
             component={RouterLink}
             to="#"
             startIcon={<Icon icon={plusFill} />}
-            onClick={() => setCreateTokenOpen(true)}
+            onClick={() => setCreateFaucetOpen(true)}
           >
             <Typography variant="body1">Create</Typography>
           </Button>
@@ -231,7 +231,7 @@ export default function ReceiveToken() {
         row={currentRow}
       />
 
-      <CreateDialog open={createTokenOpen} onClose={() => setCreateTokenOpen(false)} onSubmit={handleSubmitCreate} />
+      <CreateDialog open={createFaucetOpen} onClose={() => setCreateFaucetOpen(false)} onSubmit={handleSubmitCreate} />
 
       <DeleteDialog
         open={deleteTokenOpen}

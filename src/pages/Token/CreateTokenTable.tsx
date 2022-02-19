@@ -1,4 +1,5 @@
 import EmptyList from '@/components/EmptyList'
+import { TokenListItem } from '@/services/token'
 import { computeNumUnitAdapter } from '@/utils/formatNum'
 import { getComparator, Order } from '@/utils/sort'
 import {
@@ -11,25 +12,16 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Typography,
 } from '@mui/material'
 import { visuallyHidden } from '@mui/utils'
 import React, { useCallback, useState, useMemo } from 'react'
-import MoreMenu, { ActionState } from './ReceiveTokenMoreMenu'
+import MoreMenuToken, { ActionStateToken } from './MoreMenuToken'
 
-export type FaucetDataItem = {
-  id: number
-  chain_id: number
-  address: string
-  symbol: string
-  left_amount: string
-  left_native: string
-  admin: string
-}
+export type TokenDataItem = Omit<TokenListItem, 'created_at' | 'updated_at'>
 
 export type HeadCell = {
   disablePadding: boolean
-  id: keyof FaucetDataItem
+  id: keyof TokenDataItem
   label: string
   numeric: boolean
 }
@@ -54,39 +46,39 @@ const headCells: readonly HeadCell[] = [
     label: 'address',
   },
   {
+    id: 'decimals',
+    numeric: false,
+    disablePadding: false,
+    label: 'decimals',
+  },
+  {
     id: 'symbol',
     numeric: false,
     disablePadding: false,
     label: 'symbol',
   },
   {
-    id: 'left_amount',
+    id: 'total',
     numeric: false,
     disablePadding: false,
-    label: 'left_amount',
+    label: 'total',
   },
   {
-    id: 'left_native',
+    id: 'creator',
     numeric: false,
     disablePadding: false,
-    label: 'left_native',
-  },
-  {
-    id: 'admin',
-    numeric: false,
-    disablePadding: false,
-    label: 'admin',
+    label: 'creator',
   },
 ]
 
 type MyTableHeaderProps = {
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof FaucetDataItem) => void
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TokenDataItem) => void
   order: Order
   orderBy: string
 }
 
 function MyTableHead({ order, orderBy, onRequestSort }: MyTableHeaderProps) {
-  const createSortHandler = (property: keyof FaucetDataItem) => (event: React.MouseEvent<unknown>) => {
+  const createSortHandler = (property: keyof TokenDataItem) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property)
   }
 
@@ -124,18 +116,18 @@ function MyTableHead({ order, orderBy, onRequestSort }: MyTableHeaderProps) {
 }
 
 type ReceiveTokenTableProps = {
-  dataList?: FaucetDataItem[]
-  onAction?: (e: any, state: ActionState, row: FaucetDataItem) => void
+  dataList?: TokenDataItem[]
+  onAction?: (e: any, state: ActionStateToken, row: TokenDataItem) => void
 }
 
 export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveTokenTableProps) {
   const [order, setOrder] = useState<Order>('asc')
-  const [orderBy, setOrderBy] = useState<keyof FaucetDataItem>('id')
+  const [orderBy, setOrderBy] = useState<keyof TokenDataItem>('id')
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const handleRequestSort = useCallback(
-    (event: React.MouseEvent<unknown>, property: keyof FaucetDataItem) => {
+    (event: React.MouseEvent<unknown>, property: keyof TokenDataItem) => {
       const isAsc = orderBy === property && order === 'asc'
       setOrder(isAsc ? 'desc' : 'asc')
       setOrderBy(property)
@@ -179,21 +171,20 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
 
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    <TableCell align="right">
-                      <MoreMenu onAction={(e, state) => onAction && onAction(e, state, row)} />
+                    <TableCell align="left">
+                      <MoreMenuToken onAction={(e, state) => onAction && onAction(e, state, row)} />
                     </TableCell>
                     <TableCell component="th" id={labelId} scope="row">
                       {row.id}
                     </TableCell>
                     <TableCell align="left">{row.chain_id}</TableCell>
                     <TableCell align="left">{row.address}</TableCell>
+                    <TableCell align="left">{row.decimals}</TableCell>
                     <TableCell align="left">{row.symbol}</TableCell>
-                    {/* <TableCell align="left" color="success.main"> */}
-                    <TableCell align="left">
-                      <Typography color="success.dark">{computeNumUnitAdapter(row.left_amount)}</Typography>
+                    <TableCell align="left" sx={{ color: 'success.dark' }}>
+                      {computeNumUnitAdapter(row.total)}
                     </TableCell>
-                    <TableCell align="left">{computeNumUnitAdapter(row.left_native)}</TableCell>
-                    <TableCell align="left">{row.admin}</TableCell>
+                    <TableCell align="left">{row.creator}</TableCell>
                   </TableRow>
                 )
               })}

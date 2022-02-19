@@ -1,6 +1,6 @@
 import ReceiveForm from '@/components/ReceiveForm'
 import { Box, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material'
-import { ReceiveTokenDataItem } from './ReceiveTokenTable'
+import { FaucetDataItem } from './ReceiveTokenTable'
 import React, { useMemo } from 'react'
 
 export default function ReceiveDialog({
@@ -10,7 +10,7 @@ export default function ReceiveDialog({
   onSubmit,
 }: {
   open: boolean
-  row: ReceiveTokenDataItem | undefined
+  row: FaucetDataItem | undefined
   onClose: () => void
   onSubmit: (values: any) => void
 }) {

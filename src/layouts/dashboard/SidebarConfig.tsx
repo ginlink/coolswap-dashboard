@@ -28,7 +28,7 @@ const sidebarConfig = [
     icon: getIcon(peopleFill),
   },
   {
-    title: 'Create Token',
+    title: 'Tokens',
     path: '/dashboard/token/create',
     icon: getIcon(shoppingBagFill),
   },
