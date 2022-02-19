@@ -3,40 +3,50 @@ import { Container, Grid, Stack, Typography } from '@mui/material'
 import { ethers } from 'ethers'
 import Erc20_Bytecode from '@/bytecodes/rec20.json'
 import Erc20_Abi from '@/abis/erc20.json'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import DeployTokenForm from './DeployTokenForm'
 import Page from '@/components/Page'
 import ReceiveSuccessDialog from './ReceiveSuccessDialog'
+import { UNKNOWN_ERROR_STR } from '@/constants/misc'
+import { useSnackbar } from '@/hooks/useSnackbar'
 
 export default function CreateToken() {
   const { library } = useActiveWeb3React()
   const [receiveSuccessOpen, setReceiveSuccessOpen] = useState(false)
   const [hash, setHash] = useState('')
 
+  const { alertError, alertSuccess } = useSnackbar()
+
   const handleSubmitCreate = useCallback(
     async (values: { name: string; symbol: string; decimals: number; total: number }) => {
       debugger
-      if (!library) return
 
-      const abi = Erc20_Abi.abi
-      const bytecode = Erc20_Bytecode.object
-      const signer = library.getSigner()
+      try {
+        if (!library) return
 
-      const factory = new ethers.ContractFactory(abi, `0x${bytecode}`, signer)
+        const abi = Erc20_Abi.abi
+        const bytecode = Erc20_Bytecode.object
+        const signer = library.getSigner()
 
-      const { name, symbol, decimals, total: _total } = values
-      const total = ethers.utils.parseUnits(String(_total), decimals)
+        const factory = new ethers.ContractFactory(abi, `0x${bytecode}`, signer)
 
-      const contract = await factory.deploy(name, symbol, decimals, total)
+        const { name, symbol, decimals, total: _total } = values
+        const total = ethers.utils.parseUnits(String(_total), decimals)
 
-      console.log('[contract.address]:', contract.address)
+        const contract = await factory.deploy(name, symbol, decimals, total)
 
-      const res = await contract.deployTransaction.wait()
+        console.log('[contract.address]:', contract.address)
 
-      setHash(res.transactionHash)
-      setReceiveSuccessOpen(true)
+        const res = await contract.deployTransaction.wait()
+
+        setHash(res.transactionHash)
+        setReceiveSuccessOpen(true)
+        alertSuccess('Create success')
+      } catch (err: any) {
+        alertError(err.message || UNKNOWN_ERROR_STR)
+      }
     },
-    [library]
+    [alertError, alertSuccess, library]
   )
 
   return (

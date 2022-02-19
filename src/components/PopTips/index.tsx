@@ -1,21 +1,19 @@
-import { Alert, AlertColor, Snackbar } from '@mui/material'
-import React, { useState } from 'react'
+import { usePopTip } from '@/state/application/hooks'
+import { Alert, Snackbar } from '@mui/material'
+import React from 'react'
 
 export default function PopTips() {
-  const [messageBoxOpen, setMessageBoxOpen] = useState(false)
-  const [message, setMessage] = useState('')
-  const [autoHideDuration, setAutoHideDuration] = useState(3000)
-  const [severity, setSeverity] = useState<AlertColor>('success')
+  const [popTip, updatePopTip] = usePopTip()
 
   return (
     <Snackbar
-      open={messageBoxOpen}
-      autoHideDuration={autoHideDuration}
-      onClose={() => setMessageBoxOpen(false)}
+      open={popTip.open}
+      autoHideDuration={popTip.autoHideDuration}
+      onClose={() => updatePopTip({ ...popTip, open: !open })}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
     >
-      <Alert onClose={() => setMessageBoxOpen(false)} severity={severity} sx={{ width: '100%' }}>
-        {message}
+      <Alert onClose={() => updatePopTip({ ...popTip, open: !open })} severity={popTip.severity} sx={{ width: '100%' }}>
+        {popTip.message}
       </Alert>
     </Snackbar>
   )

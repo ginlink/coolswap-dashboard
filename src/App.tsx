@@ -10,8 +10,8 @@ export default function App() {
     <Web3ReactManager>
       <ThemeConfig>
         <GlobalStyles />
-        <Router />
         <PopTips />
+        <Router />
       </ThemeConfig>
     </Web3ReactManager>
   )
