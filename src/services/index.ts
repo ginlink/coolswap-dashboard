@@ -69,17 +69,15 @@ export default {
   get: (url: string, params: Record<string, any> = {}): Promise<any> => {
     return instance.get(url + parseParam(params))
   },
-  post: (url: string, data: any): Promise<any> => {
+  post: (url: string, data?: { [key: string]: any }): Promise<any> => {
     return instance.post(url, data)
   },
-  put: (url: string, data: any): Promise<any> => {
+  put: (url: string, data?: { [key: string]: any }): Promise<any> => {
     return instance.put(url, data)
   },
-  delete: (url: string, private_key: string): Promise<any> => {
+  delete: (url: string, data?: { [key: string]: any }): Promise<any> => {
     return instance.delete(url, {
-      data: {
-        private_key,
-      },
+      data,
     })
   },
   patch: (url: string, params: any): Promise<any> => {

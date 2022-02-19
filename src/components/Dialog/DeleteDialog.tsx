@@ -1,4 +1,4 @@
-import { ReceiveTokenDataItem } from '@/pages/Token/ReceiveTokenTable'
+import { FaucetDataItem } from '@/pages/Token/ReceiveTokenTable'
 import { Dialog, DialogContent, DialogTitle, Paper, Typography } from '@mui/material'
 import React, { useMemo } from 'react'
 import DeleteTokenForm from './DelteTokenForm'
@@ -10,7 +10,7 @@ export default function DeleteDialog({
   onSubmit,
 }: {
   open: boolean
-  row: ReceiveTokenDataItem | undefined
+  row: FaucetDataItem | undefined
   onClose: () => void
   onSubmit: (values: any) => void
 }) {

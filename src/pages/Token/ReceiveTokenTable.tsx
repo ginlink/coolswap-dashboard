@@ -17,7 +17,7 @@ import { visuallyHidden } from '@mui/utils'
 import React, { useCallback, useState, useMemo } from 'react'
 import MoreMenu, { ActionState } from './ReceiveTokenMoreMenu'
 
-export type ReceiveTokenDataItem = {
+export type FaucetDataItem = {
   id: number
   chain_id: number
   address: string
@@ -29,7 +29,7 @@ export type ReceiveTokenDataItem = {
 
 export type HeadCell = {
   disablePadding: boolean
-  id: keyof ReceiveTokenDataItem
+  id: keyof FaucetDataItem
   label: string
   numeric: boolean
 }
@@ -80,13 +80,13 @@ const headCells: readonly HeadCell[] = [
 ]
 
 type MyTableHeaderProps = {
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof ReceiveTokenDataItem) => void
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof FaucetDataItem) => void
   order: Order
   orderBy: string
 }
 
 function MyTableHead({ order, orderBy, onRequestSort }: MyTableHeaderProps) {
-  const createSortHandler = (property: keyof ReceiveTokenDataItem) => (event: React.MouseEvent<unknown>) => {
+  const createSortHandler = (property: keyof FaucetDataItem) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property)
   }
 
@@ -124,18 +124,18 @@ function MyTableHead({ order, orderBy, onRequestSort }: MyTableHeaderProps) {
 }
 
 type ReceiveTokenTableProps = {
-  dataList?: ReceiveTokenDataItem[]
-  onAction?: (e: any, state: ActionState, row: ReceiveTokenDataItem) => void
+  dataList?: FaucetDataItem[]
+  onAction?: (e: any, state: ActionState, row: FaucetDataItem) => void
 }
 
 export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveTokenTableProps) {
   const [order, setOrder] = useState<Order>('asc')
-  const [orderBy, setOrderBy] = useState<keyof ReceiveTokenDataItem>('id')
+  const [orderBy, setOrderBy] = useState<keyof FaucetDataItem>('id')
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const handleRequestSort = useCallback(
-    (event: React.MouseEvent<unknown>, property: keyof ReceiveTokenDataItem) => {
+    (event: React.MouseEvent<unknown>, property: keyof FaucetDataItem) => {
       const isAsc = orderBy === property && order === 'asc'
       setOrder(isAsc ? 'desc' : 'asc')
       setOrderBy(property)
