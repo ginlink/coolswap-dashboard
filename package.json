@@ -34,6 +34,7 @@
     "faker": "^5.5.3",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
+    "notistack": "^2.0.3",
     "react": "latest",
     "react-device-detect": "^2.1.2",
     "react-dom": "latest",

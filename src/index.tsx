@@ -7,6 +7,7 @@ import getLibrary from './utils/getLibrary'
 import { Provider as ReduxProvider } from 'react-redux'
 import store from './state'
 import ApplicationUpdater from './state/application/updater'
+import { SnackbarProvider } from 'notistack'
 
 // scroll bar
 import 'simplebar/src/simplebar.css'
@@ -24,10 +25,18 @@ ReactDOM.render(
   <HelmetProvider>
     <ReduxProvider store={store}>
       <Web3ReactProvider getLibrary={getLibrary}>
-        <HashRouter>
-          <Updater />
-          <App />
-        </HashRouter>
+        <SnackbarProvider
+          maxSnack={3}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <HashRouter>
+            <Updater />
+            <App />
+          </HashRouter>
+        </SnackbarProvider>
       </Web3ReactProvider>
     </ReduxProvider>
   </HelmetProvider>,
