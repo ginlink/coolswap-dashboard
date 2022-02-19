@@ -1,71 +1,41 @@
-import ReceiveForm from '@/components/ReceiveForm'
 import { createReceiveTokenApi, deleteReceiveTokenApi, receiveTokenApi, tokenListApi } from '@/services/api'
-import {
-  Alert,
-  AlertColor,
-  Box,
-  Button,
-  Card,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Input,
-  Snackbar,
-  Stack,
-  Tooltip,
-  tooltipClasses,
-  TooltipProps,
-  Typography,
-} from '@mui/material'
-import styled from 'styled-components/macro'
+import { Alert, AlertColor, Button, Card, Container, Snackbar, Stack, Typography } from '@mui/material'
 import ReceiveTokenTable, { ReceiveTokenDataItem } from './ReceiveTokenTable'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Icon } from '@iconify/react'
-import copyOutline from '@iconify/icons-eva/copy-outline'
-import checkmarkCircleOutline from '@iconify/icons-eva/checkmark-circle-outline'
 import plusFill from '@iconify/icons-eva/plus-fill'
-import copy from 'copy-to-clipboard'
-import { shortenAddress } from '@/utils'
 import { Link as RouterLink } from 'react-router-dom'
 import Page from '@/components/Page'
 import CreateDialog from '@/components/Dialog/CreateDialog'
 import { ActionState } from './ReceiveTokenMoreMenu'
 import DeleteDialog from '@/components/Dialog/DeleteDialog'
-import { UNKNOWN_ERROR_STR } from '@/constants/misc'
+import { CHAIN_MATCH_ERROR_STR, CONNECT_ERROR_STR, UNKNOWN_ERROR_STR } from '@/constants/misc'
 import Scrollbar from '@/components/Scrollbar'
+import ReceiveSuccessDialog from './ReceiveSuccessDialog'
+import ReceiveDialog from './ReceiveDialog'
+import SendDialog from './SendDialog'
+import { Contract, ethers } from 'ethers'
+import ERC20_ABI from '@/abis/erc20.json'
+import { useActiveWeb3React } from '@/hooks/web3'
+import { Erc20 } from '@/abis/types'
 
-const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: theme.palette.common.white,
-    color: 'rgba(0, 0, 0, 0.87)',
-    boxShadow: theme.shadows[3],
-    fontSize: 11,
-  },
-}))
-
-const DEFAULT_RECEIVE_AMOUNT = 1000
+export const DEFAULT_RECEIVE_AMOUNT = 1000
 
 export default function ReceiveToken() {
   const [receiveTokenList, setReceiveTokenList] = useState<ReceiveTokenDataItem[]>()
-  const [open, setOpen] = useState(false)
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [copySuccessOpen, setCopySuccessOpen] = useState(false)
+  const [receiveOpen, setReceiveOpen] = useState(false)
+  const [receiveSuccessOpen, setReceiveSuccessOpen] = useState(false)
   const [createTokenOpen, setCreateTokenOpen] = useState(false)
-  const [tokenAddress, setTokenAddress] = useState<string | undefined>()
   const [hash, setHash] = useState<string | undefined>()
-  const [symbol, setSymbol] = useState<string>()
-  const [address, setAddress] = useState<string>()
+  const [currentRow, setCurrentRow] = useState<ReceiveTokenDataItem>()
   const [messageBoxOpen, setMessageBoxOpen] = useState(false)
   const [message, setMessage] = useState('')
   const [severity, setSeverity] = useState<AlertColor>('success')
   const [autoHideDuration, setAutoHideDuration] = useState(3000)
   const [deleteTokenOpen, setDeleteTokenOpen] = useState(false)
-  const [deleteId, setDeleteId] = useState<number>()
+  const [sendTokenOpen, setSendTokenOpen] = useState(false)
+
+  const { account, library, chainId } = useActiveWeb3React()
 
   const alertSuccessMessage = useCallback((message: string, duration = 3000) => {
     setSeverity('success')
@@ -92,19 +62,15 @@ export default function ReceiveToken() {
 
   const handleReceiveAction = useCallback(
     async (e, state: ActionState, row: ReceiveTokenDataItem) => {
-      const { address, symbol, id } = row
-
       try {
-        if (state === ActionState.RECEIVE) {
-          setAddress(address)
-          setSymbol(symbol)
+        setCurrentRow(row)
 
-          setTokenAddress(address)
-          setOpen(true)
-        } else if (state === ActionState.EDIT) {
+        if (state === ActionState.RECEIVE) {
+          setReceiveOpen(true)
         } else if (state === ActionState.DELETE) {
-          setDeleteId(id)
           setDeleteTokenOpen(true)
+        } else if (state === ActionState.SEND) {
+          setSendTokenOpen(true)
         }
       } catch (err: any) {
         alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
@@ -113,29 +79,68 @@ export default function ReceiveToken() {
     [alertErrorMessage]
   )
 
-  const handleSubmit = useCallback(
-    async (values) => {
+  const handleSubmitReceive = useCallback(
+    async (values: { address: string; amount: string }) => {
       try {
-        if (!tokenAddress) return
+        if (!currentRow) return
 
-        const { address: receive } = values
-        const token_address = tokenAddress
-        const amount = String(DEFAULT_RECEIVE_AMOUNT)
+        const { address: receive, amount } = values
+        const { address: token_address } = currentRow
 
         const res = await receiveTokenApi(receive, token_address, amount)
 
         // alertSuccessMessage('Receive success')
 
         setHash(res.hash)
-        setOpen(false)
-        setDialogOpen(true)
+        setReceiveOpen(false)
+        setReceiveSuccessOpen(true)
       } catch (err: any) {
         console.log('[err]:', err)
         alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
       }
     },
-    [alertErrorMessage, tokenAddress]
+    [alertErrorMessage, currentRow]
   )
+
+  const handleSubmitSend = useCallback(
+    async (values: { amount: string }) => {
+      try {
+        debugger
+        if (!currentRow) {
+          return alertErrorMessage(UNKNOWN_ERROR_STR)
+        }
+
+        if (!account || !library) {
+          return alertErrorMessage(CONNECT_ERROR_STR)
+        }
+
+        const { amount } = values
+        const { address, admin, chain_id } = currentRow
+
+        if (!chain_id || chain_id != chainId) {
+          return alertErrorMessage(CHAIN_MATCH_ERROR_STR)
+        }
+
+        const signer = library.getSigner()
+
+        // send token
+        const tokenContract = new Contract(address, ERC20_ABI.abi, signer) as Erc20
+
+        const _amount = ethers.utils.parseUnits(amount, 18)
+        const { wait } = await tokenContract.transfer(admin, _amount)
+
+        await wait()
+
+        setSendTokenOpen(false)
+        alertSuccessMessage('Send success')
+      } catch (err: any) {
+        console.log('[err]:', err)
+        alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
+      }
+    },
+    [account, alertErrorMessage, alertSuccessMessage, chainId, currentRow, library]
+  )
+
   const handleSubmitCreate = useCallback(
     async (values: { chain_id: string; address: string; private_key: string }) => {
       try {
@@ -153,15 +158,16 @@ export default function ReceiveToken() {
     },
     [alertErrorMessage, alertSuccessMessage, updateTokenList]
   )
+
   const handleSubmitDelete = useCallback(
     async (values: { private_key: string }) => {
       try {
-        if (!deleteId) {
+        if (!currentRow) {
           return alertErrorMessage('Invalid delete id')
         }
 
         const { private_key } = values
-        const id = deleteId
+        const { id } = currentRow
 
         await deleteReceiveTokenApi(id, private_key)
         alertSuccessMessage('Delete success')
@@ -172,7 +178,7 @@ export default function ReceiveToken() {
         alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
       }
     },
-    [alertErrorMessage, alertSuccessMessage, deleteId, updateTokenList]
+    [alertErrorMessage, alertSuccessMessage, currentRow, updateTokenList]
   )
 
   useEffect(() => {
@@ -184,7 +190,7 @@ export default function ReceiveToken() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Receive Token
+            Faucet
           </Typography>
           <Button
             variant="contained"
@@ -202,78 +208,36 @@ export default function ReceiveToken() {
             <ReceiveTokenTable dataList={receiveTokenList} onAction={handleReceiveAction} />
           </Scrollbar>
         </Card>
-
-        <Dialog onClose={() => setOpen((prev) => !prev)} open={open}>
-          <DialogTitle>Receive</DialogTitle>
-
-          <DialogContent>
-            <Box>
-              <Typography component="div" variant="body1">
-                Receive Token: <strong>{symbol}</strong> ({address && shortenAddress(address)})
-              </Typography>
-              <Typography component="div" variant="body1">
-                Receive Amount: {DEFAULT_RECEIVE_AMOUNT}
-              </Typography>
-              <ReceiveForm onSubmit={handleSubmit} />
-            </Box>
-          </DialogContent>
-        </Dialog>
-
-        <Dialog maxWidth="sm" onClose={() => setDialogOpen((prev) => !prev)} open={dialogOpen}>
-          <DialogTitle>Receive Success</DialogTitle>
-
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              <Stack
-                direction="row"
-                alignItems="center"
-                spacing={{ xs: 0.5, sm: 1.5 }}
-                onClick={() => {
-                  setCopySuccessOpen(true)
-                  copy(hash ?? '')
-                  setTimeout(() => {
-                    setCopySuccessOpen(false)
-                  }, 1000)
-                }}
-              >
-                <Icon
-                  style={{ cursor: 'pointer' }}
-                  icon={checkmarkCircleOutline}
-                  color={'#00AB55'}
-                  width={32}
-                  height={32}
-                />
-                <Box>
-                  <Typography component="div" variant="body1">
-                    hash:
-                  </Typography>
-
-                  <Input sx={{ width: '450px' }} defaultValue={hash} />
-                </Box>
-                <LightTooltip
-                  PopperProps={{
-                    disablePortal: true,
-                  }}
-                  open={copySuccessOpen}
-                  title="Copy Success"
-                  placement="top"
-                >
-                  <Icon style={{ cursor: 'pointer' }} icon={copyOutline} width={20} height={20} />
-                </LightTooltip>
-              </Stack>
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setDialogOpen((prev) => !prev)} autoFocus>
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog>
       </Container>
+
+      <ReceiveDialog
+        open={receiveOpen}
+        onClose={() => setReceiveOpen((prev) => !prev)}
+        onSubmit={handleSubmitReceive}
+        row={currentRow}
+      />
+
+      <ReceiveSuccessDialog
+        open={receiveSuccessOpen}
+        hash={hash}
+        onClose={() => setReceiveSuccessOpen((prev) => !prev)}
+      />
+
+      <SendDialog
+        open={sendTokenOpen}
+        onClose={() => setSendTokenOpen((prev) => !prev)}
+        onSubmit={handleSubmitSend}
+        row={currentRow}
+      />
 
       <CreateDialog open={createTokenOpen} onClose={() => setCreateTokenOpen(false)} onSubmit={handleSubmitCreate} />
 
-      <DeleteDialog open={deleteTokenOpen} onClose={() => setDeleteTokenOpen(false)} onSubmit={handleSubmitDelete} />
+      <DeleteDialog
+        open={deleteTokenOpen}
+        onClose={() => setDeleteTokenOpen(false)}
+        onSubmit={handleSubmitDelete}
+        row={currentRow}
+      />
 
       <Snackbar
         open={messageBoxOpen}

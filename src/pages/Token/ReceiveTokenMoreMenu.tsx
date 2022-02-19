@@ -8,14 +8,15 @@ import React from 'react'
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material'
 
 import editFill from '@iconify/icons-eva/edit-fill'
+import sendOutlined from '@iconify/icons-ant-design/send-outlined'
 import trash2Outline from '@iconify/icons-eva/trash-2-outline'
-// import archiveOutline from '@iconify/icons-eva/archive-outline'
 
 // ----------------------------------------------------------------------
 
 export enum ActionState {
   RECEIVE,
   EDIT,
+  SEND,
   DELETE,
 }
 export default function ReceiveTokenMoreMenu({ onAction }: { onAction?: (event: any, state: ActionState) => void }) {
@@ -43,6 +44,13 @@ export default function ReceiveTokenMoreMenu({ onAction }: { onAction?: (event: 
             <Icon icon={giftOutline} width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Receive" primaryTypographyProps={{ variant: 'body2' }} />
+        </MenuItem>
+
+        <MenuItem sx={{ color: 'text.secondary' }} onClick={(e: any) => onAction && onAction(e, ActionState.SEND)}>
+          <ListItemIcon>
+            <Icon icon={sendOutlined} width={24} height={24} />
+          </ListItemIcon>
+          <ListItemText primary="Send" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
 
         {/* <MenuItem

@@ -4,24 +4,27 @@ import { Stack, TextField, InputAdornment, IconButton } from '@mui/material'
 import { FormikProvider, Form, useFormik } from 'formik'
 import DeleteIcon from '@mui/icons-material/Delete'
 import React from 'react'
+import { DEFAULT_RECEIVE_AMOUNT } from '@/pages/Token/Receive'
 
 export default function ReceiveForm({ onSubmit }: { onSubmit: (values: any) => void }) {
-  const LoginSchema = Yup.object().shape({
+  const schema = Yup.object().shape({
     address: Yup.string().required('Address is required'),
+    amount: Yup.number().min(0).max(DEFAULT_RECEIVE_AMOUNT).required('Amount is required'),
   })
 
   const formik = useFormik({
     initialValues: {
       address: '',
+      amount: '',
     },
-    validationSchema: LoginSchema,
+    validationSchema: schema,
     onSubmit: onSubmit,
   })
 
   const { errors, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } = formik
 
-  const onClearAddressHandler = () => {
-    setFieldValue('address', '')
+  const onClearAddressHandler = (key: string) => {
+    setFieldValue(key, '')
   }
 
   return (
@@ -37,7 +40,7 @@ export default function ReceiveForm({ onSubmit }: { onSubmit: (values: any) => v
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={onClearAddressHandler} edge="end">
+                  <IconButton onClick={() => onClearAddressHandler('address')} edge="end">
                     <DeleteIcon />
                   </IconButton>
                 </InputAdornment>
@@ -45,6 +48,24 @@ export default function ReceiveForm({ onSubmit }: { onSubmit: (values: any) => v
             }}
             error={Boolean(touched.address && errors.address)}
             helperText={touched.address && errors.address}
+          />
+          <TextField
+            fullWidth
+            autoComplete="current-password"
+            type={'text'}
+            label="Amount"
+            {...getFieldProps('amount')}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => onClearAddressHandler('amount')} edge="end">
+                    <DeleteIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            error={Boolean(touched.amount && errors.amount)}
+            helperText={touched.amount && errors.amount}
           />
         </Stack>
 

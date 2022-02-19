@@ -23,7 +23,7 @@ const sidebarConfig = [
   //   icon: getIcon(pieChart2Fill),
   // },
   {
-    title: 'Receive Token',
+    title: 'Faucet',
     path: '/dashboard/token/receive',
     icon: getIcon(peopleFill),
   },
