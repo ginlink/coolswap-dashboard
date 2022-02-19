@@ -33,10 +33,12 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 export default function ReceiveSuccessDialog({
   open,
+  title,
   hash,
   onClose,
 }: {
   open: boolean
+  title: string
   hash: string | undefined
   onClose: () => void
 }) {
@@ -44,7 +46,7 @@ export default function ReceiveSuccessDialog({
 
   return (
     <Dialog maxWidth="sm" onClose={onClose} open={open}>
-      <DialogTitle>Receive Success</DialogTitle>
+      <DialogTitle>{title}</DialogTitle>
 
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
