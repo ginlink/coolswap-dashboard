@@ -3,6 +3,10 @@
  */
 export enum SupportedChainId {
   EVMOS_TEST = 9000,
+  BSC = 56,
+  RINKEBY_TEST = 4,
+  HUOBI_TEST = 256,
+  MAIN = 1,
 }
 
 export const DEFAULT_CHAIN: {
