@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 // import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill'
-import peopleFill from '@iconify/icons-eva/people-fill'
-import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill'
+// import peopleFill from '@iconify/icons-eva/people-fill'
+// import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill'
 import React, { ReactNode } from 'react'
 
 // ----------------------------------------------------------------------
@@ -25,12 +25,17 @@ const sidebarConfig = [
   {
     title: 'Faucet',
     path: '/dashboard/token/receive',
-    icon: getIcon(peopleFill),
+    icon: getIcon('fa-solid:faucet'),
   },
   {
     title: 'Tokens',
     path: '/dashboard/token/create',
-    icon: getIcon(shoppingBagFill),
+    icon: getIcon('ic:round-generating-tokens'),
+  },
+  {
+    title: 'Calculator',
+    path: '/dashboard/calculator',
+    icon: getIcon('akar-icons:calculator'),
   },
 ]
 

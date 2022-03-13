@@ -9,6 +9,7 @@ import CreateToken from './pages/Token/Create'
 import NotFound from './pages/Page404'
 import React from 'react'
 import Home from './pages/Home'
+import Calculator from './pages/Calculator'
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +27,10 @@ export default function Router() {
             { path: 'receive', element: <ReceiveToken /> },
             { path: 'create', element: <CreateToken /> },
           ],
+        },
+        {
+          path: 'calculator',
+          element: <Calculator />,
         },
       ],
     },

@@ -1558,6 +1558,20 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@iconify-icons/akar-icons@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.npmjs.org/@iconify-icons/akar-icons/-/akar-icons-1.2.3.tgz#33cee9f1391a18338db81d66f9b32305feefccf6"
+  integrity sha512-URK5PWh0OvXasrW3BiR6hw+JiVnNAzJTV/Ki31Rb28VYY1WA94vXkfmUQ1ahpE8qN1yI+e4XqHkQvWx2DQDFFw==
+  dependencies:
+    "@iconify/types" "^1.0.12"
+
+"@iconify-icons/ic@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/@iconify-icons/ic/-/ic-1.2.2.tgz#ad2c1a449257ace1939b656b4cec1b69827db319"
+  integrity sha512-OHihyX+GknVpJKPY4+vbqKuP9DAqbwjdd8aej5OTeEKd2PoojizbPCxfaw6m/4JuxjKLbVO8WPfLzlvkgy4ZQA==
+  dependencies:
+    "@iconify/types" "^1.0.12"
+
 "@iconify/icons-ant-design@^1.1.0":
   version "1.1.1"
   resolved "https://registry.npmjs.org/@iconify/icons-ant-design/-/icons-ant-design-1.1.1.tgz#6dc1c63c497d36bb618f99035b7504a1802512db"
@@ -1579,6 +1593,11 @@
   integrity sha512-5InPUQlFXNP2BHrZyN4qoIweEqiFKewUHLSQ5KT1fjqHzh7MO8T6v3GAh5tAbuhzIv5Iz7RKL2+Sb7dtNhIO8A==
   dependencies:
     cross-fetch "^3.1.5"
+
+"@iconify/types@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.npmjs.org/@iconify/types/-/types-1.0.12.tgz#839f1f784b7030b94482d51996570f4dbd7d6796"
+  integrity sha512-6er6wSGF3hgc1JEZqiGpg21CTCjHBYOUwqLmb2Idzkjiw6ogalGP0ZMLVutCzah+0WB4yP+Zd2oVPN8jvJ+Ftg==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"

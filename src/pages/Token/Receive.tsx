@@ -186,7 +186,7 @@ export default function ReceiveToken() {
   }, [updateTokenList])
 
   return (
-    <Page title="Receive Token | Coolswap">
+    <Page title="Receive Token | CoolHelper">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>

@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
-import logo from '@/assets/images/cool.jpg'
+import logo from '@/assets/images/cool.png'
 // material
 import { styled } from '@mui/material/styles'
-import { Box, Drawer } from '@mui/material'
+import { Box, Drawer, Stack, Typography, useTheme } from '@mui/material'
 // components
 // import Logo from '../../components/Logo'
 import Scrollbar from '../../components/Scrollbar'
@@ -14,6 +14,7 @@ import { MHidden } from '../../components/@material-extend'
 import sidebarConfig from './SidebarConfig'
 // import account from '../../_mocks_/account'
 import React from 'react'
+import { APPBAR_DESKTOP, APPBAR_MOBILE } from './DashboardNavbar'
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +29,18 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 const LogoWrapper = styled('img')({
   height: '40px',
+  borderRadius: '50%',
 })
+
+const ToolbarStyle = styled('div')(({ theme }) => ({
+  display: 'flex',
+  minHeight: APPBAR_MOBILE,
+  borderBottom: '1px solid #eee',
+  [theme.breakpoints.up('lg')]: {
+    minHeight: APPBAR_DESKTOP,
+    padding: theme.spacing(0, 5),
+  },
+}))
 
 // ----------------------------------------------------------------------
 
@@ -53,6 +65,8 @@ export default function DashboardSidebar({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
+  const theme = useTheme()
+
   const renderContent = (
     <Scrollbar
       sx={{
@@ -60,11 +74,20 @@ export default function DashboardSidebar({
         '& .simplebar-content': { height: '100%', display: 'flex', flexDirection: 'column' },
       }}
     >
-      <Box sx={{ px: 2.5, py: 3 }}>
-        <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
-          <LogoWrapper src={logo} />
+      <ToolbarStyle sx={{ px: 1.5, py: 1, backgroundColor: theme.palette.primary.main }}>
+        <Box
+          // component={RouterLink}
+          // to="/"
+          sx={{ display: 'flex', cursor: 'pointer' }}
+        >
+          <Stack direction={'row'} alignItems={'center'} justifyContent={'center'} spacing={1}>
+            <LogoWrapper src={logo} />
+            <Typography variant={'h5'} sx={{ color: theme.palette.common.white, textDecoration: 'none' }}>
+              CoolHelper
+            </Typography>
+          </Stack>
         </Box>
-      </Box>
+      </ToolbarStyle>
 
       <NavSection navConfig={sidebarConfig} />
 

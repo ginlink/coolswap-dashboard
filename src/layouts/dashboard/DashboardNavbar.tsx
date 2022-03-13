@@ -16,9 +16,9 @@ import { MHidden } from '../../components/@material-extend'
 
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 280
-const APPBAR_MOBILE = 64
-const APPBAR_DESKTOP = 92
+export const DRAWER_WIDTH = 280
+export const APPBAR_MOBILE = 64
+export const APPBAR_DESKTOP = 92
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
   color: theme.palette.grey[800],
@@ -33,6 +33,7 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   minHeight: APPBAR_MOBILE,
+  borderBottom: '1px solid #eee',
   [theme.breakpoints.up('lg')]: {
     minHeight: APPBAR_DESKTOP,
     padding: theme.spacing(0, 5),

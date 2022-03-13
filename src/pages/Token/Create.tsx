@@ -135,7 +135,7 @@ export default function CreateToken() {
   }, [updateTokenList])
 
   return (
-    <Page title="Create Token | Coolswap">
+    <Page title="Create Token | CoolHelper">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
