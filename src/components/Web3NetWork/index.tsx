@@ -4,7 +4,7 @@ import { NETWORK_LABELS, SupportedChainId } from '@/constants/chains'
 import { useActiveWeb3React } from '@/hooks/web3'
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { shortenAddress } from '@/utils'
-import { Stack, Box, Typography, Button } from '@mui/material'
+import { Stack, Box, Typography, Button, Chip, Avatar, Tooltip } from '@mui/material'
 import React, { useCallback, useEffect, useState } from 'react'
 import { injected } from '@/connectors'
 
@@ -26,14 +26,22 @@ export default function Web3NetWork() {
   }, [account, active, error])
 
   return (
-    <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-      <Box>{chainId && <Typography>{NETWORK_LABELS[chainId]}</Typography>}</Box>
+    <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1 }}>
+      {chainId && (
+        <Tooltip title={chainId}>
+          <Chip label={NETWORK_LABELS[chainId] ?? chainId} />
+        </Tooltip>
+      )}
 
-      <Box sx={{ p: 2, pt: 1.5 }}>
+      {/* <Box>{chainId && <Typography>{NETWORK_LABELS[chainId]}</Typography>}</Box> */}
+
+      {/* <Box sx={{ p: 2, pt: 1.5 }}> */}
+      <Box>
         {account ? (
-          <Button fullWidth color="inherit" variant="outlined">
-            <Stack direction="row" alignItems="center">
+          <Button fullWidth variant="contained">
+            <Stack direction="row" alignItems="center" spacing={0.5}>
               <Icon icon={walletOutlined} width={20} height={20} />
+
               <Typography variant="body1">{shortenAddress(account)}</Typography>
             </Stack>
           </Button>

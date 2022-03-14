@@ -1,7 +1,7 @@
 import { createReceiveTokenApi, deleteReceiveTokenApi, receiveTokenApi, tokenListApi } from '@/services/api'
 import { Alert, AlertColor, Button, Card, Container, Snackbar, Stack, Typography } from '@mui/material'
 import ReceiveTokenTable, { FaucetDataItem } from './ReceiveTokenTable'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Icon } from '@iconify/react'
 import plusFill from '@iconify/icons-eva/plus-fill'
 import { Link as RouterLink } from 'react-router-dom'
@@ -18,6 +18,8 @@ import { Contract, ethers } from 'ethers'
 import ERC20_ABI from '@/abis/erc20.json'
 import { useActiveWeb3React } from '@/hooks/web3'
 import { Erc20 } from '@/abis/types'
+import ReceiveListToolbar from '@/components/ListToolbar'
+import { applySortFilter } from '@/utils/sort'
 
 export const DEFAULT_RECEIVE_AMOUNT = 1000
 
@@ -34,6 +36,7 @@ export default function ReceiveToken() {
   const [autoHideDuration, setAutoHideDuration] = useState(3000)
   const [deleteTokenOpen, setDeleteTokenOpen] = useState(false)
   const [sendTokenOpen, setSendTokenOpen] = useState(false)
+  const [filterValue, setFilterValue] = useState('')
 
   const { account, library, chainId } = useActiveWeb3React()
 
@@ -181,12 +184,21 @@ export default function ReceiveToken() {
     [alertErrorMessage, alertSuccessMessage, currentRow, updateTokenList]
   )
 
+  const handleFilterByValue = useCallback((value) => {
+    setFilterValue(value)
+  }, [])
+
+  const filteredReceiveTokenList = useMemo(
+    () => applySortFilter(receiveTokenList, undefined, filterValue),
+    [filterValue, receiveTokenList]
+  )
+
   useEffect(() => {
     updateTokenList()
   }, [updateTokenList])
 
   return (
-    <Page title="Receive Token | Coolswap">
+    <Page title="Receive Token | CoolHelper">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -204,8 +216,10 @@ export default function ReceiveToken() {
         </Stack>
 
         <Card>
+          <ReceiveListToolbar filterValue={filterValue} onFilterValue={handleFilterByValue} />
+
           <Scrollbar>
-            <ReceiveTokenTable dataList={receiveTokenList} onAction={handleReceiveAction} />
+            <ReceiveTokenTable dataList={filteredReceiveTokenList} onAction={handleReceiveAction} />
           </Scrollbar>
         </Card>
       </Container>

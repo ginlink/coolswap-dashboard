@@ -5,9 +5,10 @@ import Web3NetWork from '@/components/Web3NetWork'
 import React from 'react'
 // material
 import { alpha, styled } from '@mui/material/styles'
-import { Box, AppBar, Toolbar, IconButton } from '@mui/material'
+import { Box, AppBar, Toolbar, IconButton, Typography, Chip, Avatar } from '@mui/material'
 // components
 import { MHidden } from '../../components/@material-extend'
+import { useActiveWeb3React } from '@/hooks/web3'
 //
 // import Searchbar from './Searchbar'
 // import AccountPopover from './AccountPopover'
@@ -16,9 +17,9 @@ import { MHidden } from '../../components/@material-extend'
 
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 280
-const APPBAR_MOBILE = 64
-const APPBAR_DESKTOP = 92
+export const DRAWER_WIDTH = 280
+export const APPBAR_MOBILE = 64
+export const APPBAR_DESKTOP = 92
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
   color: theme.palette.grey[800],
@@ -33,6 +34,7 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   minHeight: APPBAR_MOBILE,
+  borderBottom: '1px solid #eee',
   [theme.breakpoints.up('lg')]: {
     minHeight: APPBAR_DESKTOP,
     padding: theme.spacing(0, 5),
@@ -46,6 +48,8 @@ DashboardNavbar.propTypes = {
 }
 
 export default function DashboardNavbar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
+  const { chainId } = useActiveWeb3React()
+
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -54,8 +58,8 @@ export default function DashboardNavbar({ onOpenSidebar }: { onOpenSidebar: () =
             <Icon icon={menu2Fill} />
           </IconButton>
         </MHidden>
-
         {/* <Searchbar /> */}
+
         <Box sx={{ flexGrow: 1 }} />
 
         <Web3NetWork />
