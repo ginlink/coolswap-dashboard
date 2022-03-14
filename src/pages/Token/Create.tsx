@@ -3,7 +3,7 @@ import { Button, Card, Container, Stack, Typography } from '@mui/material'
 import { ethers } from 'ethers'
 import Erc20_Bytecode from '@/bytecodes/rec20.json'
 import Erc20_Abi from '@/abis/erc20.json'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Page from '@/components/Page'
 import ReceiveSuccessDialog from './ReceiveSuccessDialog'
 import { CONNECT_ERROR, CONNECT_ERROR_STR, NO_PERMISSION_ERROR, UNKNOWN_ERROR_STR } from '@/constants/misc'
@@ -17,6 +17,8 @@ import Scrollbar from '@/components/Scrollbar'
 import CreateTokenTable, { TokenDataItem } from './CreateTokenTable'
 import { ActionStateToken } from './MoreMenuToken'
 import { compareAddress } from '@/utils/address'
+import ListToolbar from '@/components/ListToolbar'
+import { applySortFilter } from '@/utils/sort'
 
 export default function CreateToken() {
   const [createTokenList, setCreateTokenList] = useState<TokenListItem[]>()
@@ -25,6 +27,7 @@ export default function CreateToken() {
   const [createTokenOpen, setCreateTokenOpen] = useState(false)
   const [currentRow, setCurrentRow] = useState<TokenDataItem>()
   const [hash, setHash] = useState('')
+  const [filterValue, setFilterValue] = useState('')
 
   const { alertError, alertSuccess } = useSnackbar()
 
@@ -130,6 +133,15 @@ export default function CreateToken() {
     [alertError, handleDeleteToken]
   )
 
+  const handleFilterByValue = useCallback((value) => {
+    setFilterValue(value)
+  }, [])
+
+  const filteredList = useMemo(
+    () => applySortFilter(createTokenList, undefined, filterValue),
+    [filterValue, createTokenList]
+  )
+
   useEffect(() => {
     updateTokenList()
   }, [updateTokenList])
@@ -165,8 +177,10 @@ export default function CreateToken() {
         </Grid> */}
 
         <Card>
+          <ListToolbar filterValue={filterValue} onFilterValue={handleFilterByValue} />
+
           <Scrollbar>
-            <CreateTokenTable dataList={createTokenList} onAction={handleReceiveAction} />
+            <CreateTokenTable dataList={filteredList} onAction={handleReceiveAction} />
           </Scrollbar>
         </Card>
       </Container>

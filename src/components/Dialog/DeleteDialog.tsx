@@ -1,5 +1,5 @@
 import { FaucetDataItem } from '@/pages/Token/ReceiveTokenTable'
-import { Dialog, DialogContent, DialogTitle, Paper, Typography } from '@mui/material'
+import { Chip, Dialog, DialogContent, DialogTitle, Paper, Stack, Typography } from '@mui/material'
 import React, { useMemo } from 'react'
 import DeleteTokenForm from './DelteTokenForm'
 
@@ -14,12 +14,17 @@ export default function DeleteDialog({
   onClose: () => void
   onSubmit: (values: any) => void
 }) {
-  const { symbol } = useMemo(() => row, [row]) || {}
+  const { symbol, chain_id } = useMemo(() => row, [row]) || {}
 
   return (
     <Paper>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Delete {symbol}</DialogTitle>
+        <DialogTitle>
+          <Stack direction={'row'} alignItems={'center'} spacing={1}>
+            <Typography variant={'h5'}>Delete {symbol}</Typography>
+            <Chip label={chain_id} color="primary" />
+          </Stack>
+        </DialogTitle>
         <DialogContent>
           {/* <Typography variant="body1">
             Delete Token: <strong>{symbol}</strong> ({address && shortenAddress(address)})

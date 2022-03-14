@@ -9,6 +9,7 @@ export const injected = new InjectedConnector({
   supportedChainIds: ALL_SUPPORTED_CHAIN_IDS,
 })
 
+// no use, in addition to the test
 export const RPC_URL: RpcMap = {
   [SupportedChainId.EVMOS_TEST]: 'https://ethereum.rpc.evmos.dev',
 }

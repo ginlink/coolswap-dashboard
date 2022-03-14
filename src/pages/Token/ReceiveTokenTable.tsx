@@ -3,6 +3,7 @@ import { computeNumUnitAdapter } from '@/utils/formatNum'
 import { getComparator, Order } from '@/utils/sort'
 import {
   Box,
+  Chip,
   Table,
   TableBody,
   TableCell,
@@ -185,7 +186,9 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
                     <TableCell component="th" id={labelId} scope="row">
                       {row.id}
                     </TableCell>
-                    <TableCell align="left">{row.chain_id}</TableCell>
+                    <TableCell align="left">
+                      <Chip label={row.chain_id} />
+                    </TableCell>
                     <TableCell align="left">{row.address}</TableCell>
                     <TableCell align="left">{row.symbol}</TableCell>
                     {/* <TableCell align="left" color="success.main"> */}

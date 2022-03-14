@@ -4,6 +4,7 @@
 export enum SupportedChainId {
   EVMOS_TEST = 9000,
   BSC = 56,
+  BSC_TEST = 97,
   RINKEBY_TEST = 4,
   HUOBI_TEST = 256,
   MAIN = 1,
@@ -38,4 +39,5 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(Support
 
 export const NETWORK_LABELS: { [chainId in SupportedChainId | number]: string } = {
   [SupportedChainId.EVMOS_TEST]: 'EVMOS_TEST',
+  [SupportedChainId.HUOBI_TEST]: 'Huobi_TEST',
 }

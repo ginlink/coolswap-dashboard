@@ -5,9 +5,10 @@ import Web3NetWork from '@/components/Web3NetWork'
 import React from 'react'
 // material
 import { alpha, styled } from '@mui/material/styles'
-import { Box, AppBar, Toolbar, IconButton } from '@mui/material'
+import { Box, AppBar, Toolbar, IconButton, Typography, Chip, Avatar } from '@mui/material'
 // components
 import { MHidden } from '../../components/@material-extend'
+import { useActiveWeb3React } from '@/hooks/web3'
 //
 // import Searchbar from './Searchbar'
 // import AccountPopover from './AccountPopover'
@@ -47,6 +48,8 @@ DashboardNavbar.propTypes = {
 }
 
 export default function DashboardNavbar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
+  const { chainId } = useActiveWeb3React()
+
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -55,8 +58,8 @@ export default function DashboardNavbar({ onOpenSidebar }: { onOpenSidebar: () =
             <Icon icon={menu2Fill} />
           </IconButton>
         </MHidden>
-
         {/* <Searchbar /> */}
+
         <Box sx={{ flexGrow: 1 }} />
 
         <Web3NetWork />

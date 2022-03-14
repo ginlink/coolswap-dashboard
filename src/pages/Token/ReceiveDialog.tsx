@@ -1,5 +1,5 @@
 import ReceiveForm from '@/components/ReceiveForm'
-import { Box, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material'
+import { Box, Chip, Dialog, DialogContent, DialogTitle, Stack, Typography } from '@mui/material'
 import { FaucetDataItem } from './ReceiveTokenTable'
 import React, { useMemo } from 'react'
 
@@ -14,11 +14,16 @@ export default function ReceiveDialog({
   onClose: () => void
   onSubmit: (values: any) => void
 }) {
-  const { symbol, address } = useMemo(() => row, [row]) || {}
+  const { symbol, address, chain_id } = useMemo(() => row, [row]) || {}
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <DialogTitle>Receive {symbol}</DialogTitle>
+      <DialogTitle>
+        <Stack direction={'row'} alignItems={'center'} spacing={1}>
+          <Typography variant={'h5'}>Receive {symbol}</Typography>
+          <Chip label={chain_id} color="primary" />
+        </Stack>
+      </DialogTitle>
 
       <DialogContent>
         <Box>
