@@ -4,6 +4,7 @@ import { computeNumUnitAdapter } from '@/utils/formatNum'
 import { getComparator, Order } from '@/utils/sort'
 import {
   Box,
+  Chip,
   Table,
   TableBody,
   TableCell,
@@ -177,10 +178,16 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
                     <TableCell component="th" id={labelId} scope="row">
                       {row.id}
                     </TableCell>
-                    <TableCell align="left">{row.chain_id}</TableCell>
+                    <TableCell align="left">
+                      <Chip color={'primary'} label={row.chain_id} />
+                    </TableCell>
                     <TableCell align="left">{row.address}</TableCell>
-                    <TableCell align="left">{row.decimals}</TableCell>
-                    <TableCell align="left">{row.symbol}</TableCell>
+                    <TableCell align="left">
+                      <Chip color={'warning'} label={row.decimals} />
+                    </TableCell>
+                    <TableCell align="left">
+                      <Chip color={'info'} label={row.symbol} />
+                    </TableCell>
                     <TableCell align="left" sx={{ color: 'success.dark' }}>
                       {computeNumUnitAdapter(row.total)}
                     </TableCell>
