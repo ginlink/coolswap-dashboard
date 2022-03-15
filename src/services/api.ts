@@ -16,7 +16,7 @@ export function example() {
   return http.get('/example') as Promise<any>
 }
 
-export function tokenListApi() {
+export function faucetListApi() {
   return http.get('/faucet') as Promise<FaucetListItem[]>
 }
 

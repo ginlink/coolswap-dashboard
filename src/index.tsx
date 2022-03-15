@@ -7,6 +7,7 @@ import getLibrary from './utils/getLibrary'
 import { Provider as ReduxProvider } from 'react-redux'
 import store from './state'
 import ApplicationUpdater from './state/application/updater'
+import HttpUpdater from './state/http/updater'
 import { SnackbarProvider } from 'notistack'
 
 // scroll bar
@@ -17,6 +18,7 @@ function Updater() {
   return (
     <>
       <ApplicationUpdater />
+      <HttpUpdater />
     </>
   )
 }
