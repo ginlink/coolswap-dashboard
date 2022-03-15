@@ -1,4 +1,4 @@
-import { createReceiveTokenApi, deleteReceiveTokenApi, receiveTokenApi, tokenListApi } from '@/services/api'
+import { createReceiveTokenApi, deleteReceiveTokenApi, receiveTokenApi, faucetListApi } from '@/services/api'
 import { Alert, AlertColor, Button, Card, Container, Snackbar, Stack, Typography } from '@mui/material'
 import ReceiveTokenTable, { FaucetDataItem } from './ReceiveTokenTable'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -20,6 +20,8 @@ import { useActiveWeb3React } from '@/hooks/web3'
 import { Erc20 } from '@/abis/types'
 import ReceiveListToolbar from '@/components/ListToolbar'
 import { applySortFilter } from '@/utils/sort'
+import { useBlockNumber } from '@/state/application/hooks'
+import { useFaucetList } from '@/state/http/hooks'
 
 export const DEFAULT_RECEIVE_AMOUNT = 1000
 
@@ -39,6 +41,23 @@ export default function ReceiveToken() {
   const [filterValue, setFilterValue] = useState('')
 
   const { account, library, chainId } = useActiveWeb3React()
+  const blockNumber = useBlockNumber()
+
+  const [faucetList, updateFaucetList] = useFaucetList()
+
+  useEffect(() => {
+    console.log('[blockNumber]:', blockNumber)
+  }, [blockNumber])
+
+  useEffect(() => {
+    console.log('[faucetList]:', faucetList)
+  }, [faucetList])
+
+  useEffect(() => {
+    setTimeout(() => {
+      updateFaucetList(undefined)
+    }, 1000)
+  }, [updateFaucetList])
 
   const alertSuccessMessage = useCallback((message: string, duration = 3000) => {
     setSeverity('success')
@@ -54,7 +73,7 @@ export default function ReceiveToken() {
   }, [])
 
   const updateTokenList = useCallback(() => {
-    tokenListApi()
+    faucetListApi()
       .then((res) => {
         setReceiveTokenList(res)
       })

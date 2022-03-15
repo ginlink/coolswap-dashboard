@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import application from './application/reducer'
+import http from './http/reducer'
 
 const store = configureStore({
   reducer: {
     application,
+    http,
   },
 })
 

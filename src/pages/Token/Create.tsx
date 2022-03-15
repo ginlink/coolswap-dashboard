@@ -19,6 +19,7 @@ import { ActionStateToken } from './MoreMenuToken'
 import { compareAddress } from '@/utils/address'
 import ListToolbar from '@/components/ListToolbar'
 import { applySortFilter } from '@/utils/sort'
+import { useTokenList } from '@/state/http/hooks'
 
 export default function CreateToken() {
   const [createTokenList, setCreateTokenList] = useState<TokenListItem[]>()
@@ -30,6 +31,11 @@ export default function CreateToken() {
   const [filterValue, setFilterValue] = useState('')
 
   const { alertError, alertSuccess } = useSnackbar()
+  const [tokenList] = useTokenList()
+
+  useEffect(() => {
+    console.log('[tokenList]:', tokenList)
+  }, [tokenList])
 
   const updateTokenList = useCallback(() => {
     tokenListApi()
