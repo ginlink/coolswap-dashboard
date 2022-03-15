@@ -187,11 +187,12 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
                       {row.id}
                     </TableCell>
                     <TableCell align="left">
-                      <Chip label={row.chain_id} />
+                      <Chip color={'primary'} label={row.chain_id} />
                     </TableCell>
                     <TableCell align="left">{row.address}</TableCell>
-                    <TableCell align="left">{row.symbol}</TableCell>
-                    {/* <TableCell align="left" color="success.main"> */}
+                    <TableCell align="left">
+                      <Chip color={'info'} label={row.symbol} />
+                    </TableCell>
                     <TableCell align="left">
                       <Typography color="success.dark">{computeNumUnitAdapter(row.left_amount)}</Typography>
                     </TableCell>
