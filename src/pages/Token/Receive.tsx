@@ -1,7 +1,7 @@
 import { createReceiveTokenApi, deleteReceiveTokenApi, receiveTokenApi, faucetListApi } from '@/services/api'
 import { Alert, AlertColor, Button, Card, Container, Snackbar, Stack, Typography } from '@mui/material'
 import ReceiveTokenTable, { FaucetDataItem } from './ReceiveTokenTable'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Icon } from '@iconify/react'
 import plusFill from '@iconify/icons-eva/plus-fill'
 import { Link as RouterLink } from 'react-router-dom'
@@ -20,13 +20,11 @@ import { useActiveWeb3React } from '@/hooks/web3'
 import { Erc20 } from '@/abis/types'
 import ReceiveListToolbar from '@/components/ListToolbar'
 import { applySortFilter } from '@/utils/sort'
-import { useBlockNumber } from '@/state/application/hooks'
 import { useFaucetList } from '@/state/http/hooks'
 
 export const DEFAULT_RECEIVE_AMOUNT = 1000
 
 export default function ReceiveToken() {
-  const [receiveTokenList, setReceiveTokenList] = useState<FaucetDataItem[]>()
   const [receiveOpen, setReceiveOpen] = useState(false)
   const [receiveSuccessOpen, setReceiveSuccessOpen] = useState(false)
   const [createFaucetOpen, setCreateFaucetOpen] = useState(false)
@@ -41,23 +39,8 @@ export default function ReceiveToken() {
   const [filterValue, setFilterValue] = useState('')
 
   const { account, library, chainId } = useActiveWeb3React()
-  const blockNumber = useBlockNumber()
 
   const [faucetList, updateFaucetList] = useFaucetList()
-
-  useEffect(() => {
-    console.log('[blockNumber]:', blockNumber)
-  }, [blockNumber])
-
-  useEffect(() => {
-    console.log('[faucetList]:', faucetList)
-  }, [faucetList])
-
-  useEffect(() => {
-    setTimeout(() => {
-      updateFaucetList(undefined)
-    }, 1000)
-  }, [updateFaucetList])
 
   const alertSuccessMessage = useCallback((message: string, duration = 3000) => {
     setSeverity('success')
@@ -72,15 +55,15 @@ export default function ReceiveToken() {
     setAutoHideDuration(duration)
   }, [])
 
-  const updateTokenList = useCallback(() => {
+  const updateFaucetList111 = useCallback(() => {
     faucetListApi()
       .then((res) => {
-        setReceiveTokenList(res)
+        updateFaucetList(res)
       })
       .catch((err) => {
         console.log('[err]:', err)
       })
-  }, [])
+  }, [updateFaucetList])
 
   const handleReceiveAction = useCallback(
     async (e, state: ActionState, row: FaucetDataItem) => {
@@ -170,7 +153,7 @@ export default function ReceiveToken() {
 
         await createReceiveTokenApi(chain_id, address, private_key)
 
-        updateTokenList()
+        updateFaucetList111()
         setCreateFaucetOpen(false)
         alertSuccessMessage('Create success')
       } catch (err: any) {
@@ -178,7 +161,7 @@ export default function ReceiveToken() {
         alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
       }
     },
-    [alertErrorMessage, alertSuccessMessage, updateTokenList]
+    [alertErrorMessage, alertSuccessMessage, updateFaucetList111]
   )
 
   const handleSubmitDelete = useCallback(
@@ -193,14 +176,14 @@ export default function ReceiveToken() {
 
         await deleteReceiveTokenApi(id, private_key)
         alertSuccessMessage('Delete success')
-        updateTokenList()
+        updateFaucetList111()
         setDeleteTokenOpen(false)
       } catch (err: any) {
         console.log('[err]:', err)
         alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
       }
     },
-    [alertErrorMessage, alertSuccessMessage, currentRow, updateTokenList]
+    [alertErrorMessage, alertSuccessMessage, currentRow, updateFaucetList111]
   )
 
   const handleFilterByValue = useCallback((value) => {
@@ -208,13 +191,9 @@ export default function ReceiveToken() {
   }, [])
 
   const filteredReceiveTokenList = useMemo(
-    () => applySortFilter(receiveTokenList, undefined, filterValue),
-    [filterValue, receiveTokenList]
+    () => applySortFilter(faucetList, undefined, filterValue),
+    [filterValue, faucetList]
   )
-
-  useEffect(() => {
-    updateTokenList()
-  }, [updateTokenList])
 
   return (
     <Page title="Receive Token | CoolHelper">

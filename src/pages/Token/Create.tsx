@@ -3,10 +3,10 @@ import { Button, Card, Container, Stack, Typography } from '@mui/material'
 import { ethers } from 'ethers'
 import Erc20_Bytecode from '@/bytecodes/rec20.json'
 import Erc20_Abi from '@/abis/erc20.json'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import Page from '@/components/Page'
 import ReceiveSuccessDialog from './ReceiveSuccessDialog'
-import { CONNECT_ERROR, CONNECT_ERROR_STR, NO_PERMISSION_ERROR, UNKNOWN_ERROR_STR } from '@/constants/misc'
+import { CONNECT_ERROR, NO_PERMISSION_ERROR, UNKNOWN_ERROR_STR } from '@/constants/misc'
 import { useSnackbar } from '@/hooks/useSnackbar'
 import { createTokenApi, deleteTokenApi, tokenListApi, TokenListItem } from '@/services/token'
 import { Link as RouterLink } from 'react-router-dom'
@@ -22,7 +22,6 @@ import { applySortFilter } from '@/utils/sort'
 import { useTokenList } from '@/state/http/hooks'
 
 export default function CreateToken() {
-  const [createTokenList, setCreateTokenList] = useState<TokenListItem[]>()
   const { library, chainId, account } = useActiveWeb3React()
   const [receiveSuccessOpen, setReceiveSuccessOpen] = useState(false)
   const [createTokenOpen, setCreateTokenOpen] = useState(false)
@@ -31,22 +30,18 @@ export default function CreateToken() {
   const [filterValue, setFilterValue] = useState('')
 
   const { alertError, alertSuccess } = useSnackbar()
-  const [tokenList] = useTokenList()
+  const [tokenList, updateTokenList] = useTokenList()
 
-  useEffect(() => {
-    console.log('[tokenList]:', tokenList)
-  }, [tokenList])
-
-  const updateTokenList = useCallback(() => {
+  const updateTokenList111 = useCallback(() => {
     tokenListApi()
       .then((res) => {
-        setCreateTokenList(res)
+        updateTokenList(res)
       })
       .catch((err: any) => {
         console.log('[err]:', err)
         alertError(err.message || UNKNOWN_ERROR_STR)
       })
-  }, [alertError])
+  }, [alertError, updateTokenList])
 
   const handleSubmitCreate = useCallback(
     async (values: { name: string; symbol: string; decimals: number; total: number; checked: boolean }) => {
@@ -84,7 +79,7 @@ export default function CreateToken() {
           await createTokenApi(data)
         }
 
-        updateTokenList()
+        updateTokenList111()
 
         setHash(res.transactionHash)
         setCreateTokenOpen(false)
@@ -94,7 +89,7 @@ export default function CreateToken() {
         alertError(err.message || UNKNOWN_ERROR_STR)
       }
     },
-    [account, alertError, alertSuccess, chainId, library, updateTokenList]
+    [account, alertError, alertSuccess, chainId, library, updateTokenList111]
   )
 
   const handleDeleteToken = useCallback(
@@ -112,13 +107,13 @@ export default function CreateToken() {
 
         await deleteTokenApi(id)
 
-        updateTokenList()
+        updateTokenList111()
         alertSuccess('Delete success')
       } catch (err: any) {
         alertError(err.message || UNKNOWN_ERROR_STR)
       }
     },
-    [account, alertError, alertSuccess, updateTokenList]
+    [account, alertError, alertSuccess, updateTokenList111]
   )
 
   const handleReceiveAction = useCallback(
@@ -143,14 +138,7 @@ export default function CreateToken() {
     setFilterValue(value)
   }, [])
 
-  const filteredList = useMemo(
-    () => applySortFilter(createTokenList, undefined, filterValue),
-    [filterValue, createTokenList]
-  )
-
-  useEffect(() => {
-    updateTokenList()
-  }, [updateTokenList])
+  const filteredList = useMemo(() => applySortFilter(tokenList, undefined, filterValue), [filterValue, tokenList])
 
   return (
     <Page title="Create Token | CoolHelper">
