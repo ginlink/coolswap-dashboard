@@ -70,13 +70,13 @@ export default function Calculator() {
                 let earned: BigNumber | undefined
 
                 if (direction == Direction.UP) {
-                  stop_loss_price = new BigNumber(curr_price - curr_price * Number(loss_rate1))
-                  stop_earn_price = new BigNumber(curr_price + curr_price * Number(earn_rate1))
+                  stop_loss_price = new BigNumber(curr_price).minus(loss_rate1.times(curr_price))
+                  stop_earn_price = new BigNumber(curr_price).plus(earn_rate1.times(curr_price))
                   flat_price = new BigNumber(curr_price - curr_price * Number(1 / mul))
                   earned = new BigNumber(earn_price)
                 } else if (direction == Direction.DOWN) {
-                  stop_loss_price = new BigNumber(curr_price + curr_price * Number(earn_price / in_price / mul))
-                  stop_earn_price = new BigNumber(curr_price - curr_price * Number(loss_price / in_price / mul))
+                  stop_loss_price = new BigNumber(curr_price).plus(loss_rate1.times(curr_price))
+                  stop_earn_price = new BigNumber(curr_price).minus(earn_rate1.times(curr_price))
                   flat_price = new BigNumber(curr_price + curr_price * Number(1 / mul))
                   earned = new BigNumber(earn_price)
                 }
