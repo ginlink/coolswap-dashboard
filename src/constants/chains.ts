@@ -7,6 +7,8 @@ export enum SupportedChainId {
   BSC_TEST = 97,
   RINKEBY_TEST = 4,
   HUOBI_TEST = 256,
+  KCC = 321,
+  KCC_TEST = 322,
   MAIN = 1,
 }
 
