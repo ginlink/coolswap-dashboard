@@ -23,6 +23,7 @@ import { useFaucetList } from '@/state/http/hooks'
 import { addToken } from '@/utils/token'
 import { switchToNetwork } from '@/utils/switchToNetwork'
 import { ActionState } from './types'
+import { Trans } from '@lingui/macro'
 
 export const DEFAULT_RECEIVE_AMOUNT = 1000
 
@@ -219,7 +220,7 @@ export default function ReceiveToken() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Faucet
+            <Trans>Faucet</Trans>
           </Typography>
           <Button
             variant="contained"
