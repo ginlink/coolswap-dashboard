@@ -40,7 +40,10 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(Support
 
 export const NETWORK_LABELS: { [chainId in SupportedChainId | number]: string } = {
   [SupportedChainId.EVMOS_TEST]: 'EVMOS_TEST',
-  [SupportedChainId.HUOBI_TEST]: 'Huobi_TEST',
+  [SupportedChainId.RINKEBY]: 'RINKEBY',
+  [SupportedChainId.BSC_TEST]: 'BSC_TEST',
+  [SupportedChainId.KCC_TEST]: 'KCC_TEST',
+  [SupportedChainId.HUOBI_TEST]: 'HUOBI_TEST',
 }
 
 /**
