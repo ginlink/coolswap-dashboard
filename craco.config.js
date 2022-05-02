@@ -17,5 +17,17 @@ module.exports = {
       '@mui/styled-engine': '@mui/styled-engine-sc',
       // '@': path.resolve(__dirname, 'src'),
     },
+    configure: (config, { env, paths }) => {
+      config.module.rules.push({
+        test: /\.po/,
+        use: [
+          {
+            loader: '@lingui/loader',
+          },
+        ],
+      })
+
+      return config
+    },
   },
 }

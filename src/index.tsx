@@ -13,6 +13,7 @@ import { SnackbarProvider } from 'notistack'
 // scroll bar
 import 'simplebar/src/simplebar.css'
 import { HelmetProvider } from 'react-helmet-async'
+import { LanguageProvider } from './i18n'
 
 function Updater() {
   return (
@@ -25,22 +26,24 @@ function Updater() {
 
 ReactDOM.render(
   <HelmetProvider>
-    <ReduxProvider store={store}>
-      <Web3ReactProvider getLibrary={getLibrary}>
-        <SnackbarProvider
-          maxSnack={3}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-        >
-          <HashRouter>
-            <Updater />
-            <App />
-          </HashRouter>
-        </SnackbarProvider>
-      </Web3ReactProvider>
-    </ReduxProvider>
+    <HashRouter>
+      <ReduxProvider store={store}>
+        <LanguageProvider>
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <SnackbarProvider
+              maxSnack={3}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <Updater />
+              <App />
+            </SnackbarProvider>
+          </Web3ReactProvider>
+        </LanguageProvider>
+      </ReduxProvider>
+    </HashRouter>
   </HelmetProvider>,
   document.getElementById('root')
 )
