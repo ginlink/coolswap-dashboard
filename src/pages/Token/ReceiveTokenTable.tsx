@@ -15,8 +15,9 @@ import {
   Typography,
 } from '@mui/material'
 import { visuallyHidden } from '@mui/utils'
-import React, { useCallback, useState, useMemo } from 'react'
-import MoreMenu, { ActionState } from './ReceiveTokenMoreMenu'
+import React, { useCallback, useState, useMemo, Fragment } from 'react'
+import { Actions } from './ReceiveTokenMoreMenu'
+import { ActionState } from './types'
 
 export type FaucetDataItem = {
   id: number
@@ -40,43 +41,43 @@ const headCells: readonly HeadCell[] = [
     id: 'id',
     numeric: true,
     disablePadding: false,
-    label: 'id',
+    label: 'Id',
   },
   {
     id: 'chain_id',
     numeric: true,
     disablePadding: false,
-    label: 'chain_id',
+    label: 'Chain',
   },
   {
     id: 'address',
     numeric: false,
     disablePadding: false,
-    label: 'address',
+    label: 'Address',
   },
   {
     id: 'symbol',
     numeric: false,
     disablePadding: false,
-    label: 'symbol',
+    label: 'Symbol',
   },
   {
     id: 'left_amount',
     numeric: false,
     disablePadding: false,
-    label: 'left_amount',
+    label: 'Amount',
   },
   {
     id: 'left_native',
     numeric: false,
     disablePadding: false,
-    label: 'left_native',
+    label: 'Native Amount',
   },
   {
     id: 'admin',
     numeric: false,
     disablePadding: false,
-    label: 'admin',
+    label: 'Provider',
   },
 ]
 
@@ -181,7 +182,7 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     <TableCell align="right">
-                      <MoreMenu onAction={(e, state) => onAction && onAction(e, state, row)} />
+                      <Actions onAction={(e: any, action: ActionState) => onAction && onAction(e, action, row)} />
                     </TableCell>
                     <TableCell component="th" id={labelId} scope="row">
                       {row.id}

@@ -15,7 +15,11 @@ export default function CreateTokenDialog({
     <Paper>
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>Create Token</DialogTitle>
-        <DialogContent>
+        <DialogContent
+          sx={{
+            minWidth: ['300px', '420px'],
+          }}
+        >
           {/* <Typography variant="subtitle2" sx={{ maxWidth: '400px' }}>
             Notice: Please use the private key of the test account. Otherwise there is a risk that the funds will be
             stolen!

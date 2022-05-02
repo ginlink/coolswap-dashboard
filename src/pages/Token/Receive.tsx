@@ -7,7 +7,6 @@ import plusFill from '@iconify/icons-eva/plus-fill'
 import { Link as RouterLink } from 'react-router-dom'
 import Page from '@/components/Page'
 import CreateDialog from '@/components/Dialog/CreateDialog'
-import { ActionState } from './ReceiveTokenMoreMenu'
 import DeleteDialog from '@/components/Dialog/DeleteDialog'
 import { CHAIN_MATCH_ERROR_STR, CONNECT_ERROR_STR, UNKNOWN_ERROR_STR } from '@/constants/misc'
 import Scrollbar from '@/components/Scrollbar'
@@ -21,6 +20,9 @@ import { Erc20 } from '@/abis/types'
 import ReceiveListToolbar from '@/components/ListToolbar'
 import { applySortFilter } from '@/utils/sort'
 import { useFaucetList } from '@/state/http/hooks'
+import { addToken } from '@/utils/token'
+import { switchToNetwork } from '@/utils/switchToNetwork'
+import { ActionState } from './types'
 
 export const DEFAULT_RECEIVE_AMOUNT = 1000
 
@@ -69,19 +71,36 @@ export default function ReceiveToken() {
     async (e, state: ActionState, row: FaucetDataItem) => {
       try {
         setCurrentRow(row)
+        const { address, symbol, chain_id } = row
 
-        if (state === ActionState.RECEIVE) {
-          setReceiveOpen(true)
-        } else if (state === ActionState.DELETE) {
-          setDeleteTokenOpen(true)
-        } else if (state === ActionState.SEND) {
-          setSendTokenOpen(true)
+        switch (state) {
+          case ActionState.RECEIVE:
+            setReceiveOpen(true)
+            break
+          case ActionState.DELETE:
+            setDeleteTokenOpen(true)
+            break
+          case ActionState.SEND:
+            setSendTokenOpen(true)
+            break
+          case ActionState.ADD_TO_METAMASK:
+            if (!library || !chainId) {
+              throw new Error('Connect wallet first')
+            }
+
+            if (chain_id != chainId) {
+              await switchToNetwork({ provider: library.provider, chainId: chain_id })
+            } else {
+              await addToken(library, address, symbol, 18)
+            }
+            break
+          default:
         }
       } catch (err: any) {
         alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
       }
     },
-    [alertErrorMessage]
+    [alertErrorMessage, chainId, library]
   )
 
   const handleSubmitReceive = useCallback(
