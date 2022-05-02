@@ -25,7 +25,11 @@ export default function ReceiveDialog({
         </Stack>
       </DialogTitle>
 
-      <DialogContent>
+      <DialogContent
+        sx={{
+          minWidth: ['300px', '420px'],
+        }}
+      >
         <Box>
           <Typography component="div" variant="body1">
             Token: <strong>{address}</strong>

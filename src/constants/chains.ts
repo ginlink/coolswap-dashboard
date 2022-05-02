@@ -5,11 +5,10 @@ export enum SupportedChainId {
   EVMOS_TEST = 9000,
   BSC = 56,
   BSC_TEST = 97,
-  RINKEBY_TEST = 4,
+  RINKEBY = 4,
   HUOBI_TEST = 256,
   KCC = 321,
   KCC_TEST = 322,
-  MAIN = 1,
 }
 
 export const DEFAULT_CHAIN: {
@@ -43,3 +42,23 @@ export const NETWORK_LABELS: { [chainId in SupportedChainId | number]: string } 
   [SupportedChainId.EVMOS_TEST]: 'EVMOS_TEST',
   [SupportedChainId.HUOBI_TEST]: 'Huobi_TEST',
 }
+
+/**
+ * All the chain IDs that are running the Ethereum protocol.
+ */
+export const L1_CHAIN_IDS = [
+  SupportedChainId.RINKEBY,
+  SupportedChainId.BSC_TEST,
+  SupportedChainId.KCC_TEST,
+  SupportedChainId.HUOBI_TEST,
+] as const
+
+export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]
+
+/**
+ * Controls some L2 specific behavior, e.g. slippage tolerance, special UI behavior.
+ * The expectation is that all of these networks have immediate transaction confirmation.
+ */
+export const L2_CHAIN_IDS = [] as const
+
+export type SupportedL2ChainId = typeof L2_CHAIN_IDS[number]

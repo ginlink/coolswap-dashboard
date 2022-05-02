@@ -36,6 +36,7 @@
     "faker": "^5.5.3",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
+    "ms.macro": "^2.0.0",
     "notistack": "^2.0.3",
     "react": "latest",
     "react-device-detect": "^2.1.2",
@@ -53,6 +54,7 @@
   "devDependencies": {
     "@craco/craco": "latest",
     "@typechain/ethers-v5": "^9.0.0",
+    "@types/ms.macro": "^2.0.0",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
