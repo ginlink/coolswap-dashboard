@@ -43,7 +43,7 @@ export const LOCALE_LABEL: { [locale in SupportedLocale]: string } = {
   // 'da-DK': 'dansk',
   // 'de-DE': 'Deutsch',
   // 'el-GR': 'ελληνικά',
-  'en-US': 'EN',
+  'en-US': 'English',
   // 'es-ES': 'Español',
   // 'fi-FI': 'Suomalainen',
   // 'fr-FR': 'français',

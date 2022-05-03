@@ -18,6 +18,7 @@ import { visuallyHidden } from '@mui/utils'
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
 import { Actions } from './ReceiveTokenMoreMenu'
 import { ActionState } from './types'
+import { t, Trans } from '@lingui/macro'
 
 export type FaucetDataItem = {
   id: number
@@ -41,43 +42,43 @@ const headCells: readonly HeadCell[] = [
     id: 'id',
     numeric: true,
     disablePadding: false,
-    label: 'Id',
+    label: t`Id`,
   },
   {
     id: 'chain_id',
     numeric: true,
     disablePadding: false,
-    label: 'Chain',
+    label: t`Chain`,
   },
   {
     id: 'address',
     numeric: false,
     disablePadding: false,
-    label: 'Address',
+    label: t`Address`,
   },
   {
     id: 'symbol',
     numeric: false,
     disablePadding: false,
-    label: 'Symbol',
+    label: t`Symbol`,
   },
   {
     id: 'left_amount',
     numeric: false,
     disablePadding: false,
-    label: 'Amount',
+    label: t`Amount`,
   },
   {
     id: 'left_native',
     numeric: false,
     disablePadding: false,
-    label: 'Native Amount',
+    label: t`Native Amount`,
   },
   {
     id: 'admin',
     numeric: false,
     disablePadding: false,
-    label: 'Provider',
+    label: t`Provider`,
   },
 ]
 
@@ -96,7 +97,7 @@ function MyTableHead({ order, orderBy, onRequestSort }: MyTableHeaderProps) {
     <TableHead>
       <TableRow>
         <TableCell key={'action'} align={'left'} padding={'normal'}>
-          Action
+          <Trans>Action</Trans>
         </TableCell>
 
         {headCells.map((headCell) => (

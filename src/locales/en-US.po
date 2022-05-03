@@ -6,7 +6,103 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: en-US\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Action"
+msgstr "Action"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Address"
+msgstr "Address"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Amount"
+msgstr "Amount"
+
+#: src/layouts/dashboard/SidebarConfig.tsx
+msgid "Calculator"
+msgstr "Calculator"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Chain"
+msgstr "Chain"
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Contract Call"
+msgstr "Contract Call"
+
+#: src/components/Dialog/CreateDialog.tsx
+#: src/components/Dialog/CreateTokenForm.tsx
+#: src/pages/Token/Create.tsx
+msgid "Create"
+msgstr "Create"
+
+#: src/pages/Token/Create.tsx
+msgid "Create Success"
+msgstr "Create Success"
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Create Token"
+msgstr "Create Token"
+
+#: src/pages/Token/Create.tsx
+msgid "Create success"
+msgstr "Create success"
+
+#: src/pages/Token/CreateTokenTable.tsx
+msgid "Creator"
+msgstr "Creator"
+
+#: src/pages/Token/CreateTokenTable.tsx
+msgid "Decimals"
+msgstr "Decimals"
+
+#: src/layouts/dashboard/SidebarConfig.tsx
 #: src/pages/Token/Receive.tsx
 msgid "Faucet"
 msgstr "Faucet"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Id"
+msgstr "Id"
+
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Native Amount"
+msgstr "Native Amount"
+
+#: src/components/Dialog/CreateDialog.tsx
+msgid "Notice: Please use the private key of the test account. Otherwise there is a risk that the funds will be stolen!"
+msgstr "Notice: Please use the private key of the test account. Otherwise there is a risk that the funds will be stolen!"
+
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Provider"
+msgstr "Provider"
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Receive Token"
+msgstr "Receive Token"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Symbol"
+msgstr "Symbol"
+
+#: src/components/Dashboard/listItems.tsx
+#: src/layouts/dashboard/SidebarConfig.tsx
+#: src/pages/Token/Create.tsx
+msgid "Tokens"
+msgstr "Tokens"

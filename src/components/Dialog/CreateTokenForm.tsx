@@ -3,8 +3,9 @@ import { LoadingButton } from '@mui/lab'
 import { Stack, TextField, InputAdornment, IconButton, Autocomplete, Box } from '@mui/material'
 import { Form, FormikProvider, useFormik } from 'formik'
 import * as Yup from 'yup'
-import React from 'react'
 import { chainIds } from './data'
+import { Trans } from '@lingui/macro'
+import React from 'react'
 
 export default function CreateTokenForm({ onSubmit }: { onSubmit: (values: any) => void }) {
   const schema = Yup.object().shape({
@@ -106,7 +107,7 @@ export default function CreateTokenForm({ onSubmit }: { onSubmit: (values: any) 
           loading={isSubmitting}
           disabled={!isValid}
         >
-          Create
+          <Trans>Create</Trans>
         </LoadingButton>
       </Form>
     </FormikProvider>

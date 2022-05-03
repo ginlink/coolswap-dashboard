@@ -229,7 +229,9 @@ export default function ReceiveToken() {
             startIcon={<Icon icon={plusFill} />}
             onClick={() => setCreateFaucetOpen(true)}
           >
-            <Typography variant="body1">Create</Typography>
+            <Typography variant="body1">
+              <Trans>Create</Trans>
+            </Typography>
           </Button>
         </Stack>
 

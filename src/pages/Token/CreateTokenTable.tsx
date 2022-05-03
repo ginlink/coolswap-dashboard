@@ -15,8 +15,9 @@ import {
   TableSortLabel,
 } from '@mui/material'
 import { visuallyHidden } from '@mui/utils'
-import React, { useCallback, useState, useMemo } from 'react'
 import MoreMenuToken, { ActionStateToken } from './MoreMenuToken'
+import { t, Trans } from '@lingui/macro'
+import React, { useCallback, useState, useMemo } from 'react'
 
 export type TokenDataItem = Omit<TokenListItem, 'created_at' | 'updated_at'>
 
@@ -32,43 +33,43 @@ const headCells: readonly HeadCell[] = [
     id: 'id',
     numeric: true,
     disablePadding: false,
-    label: 'Id',
+    label: t`Id`,
   },
   {
     id: 'chain_id',
     numeric: true,
     disablePadding: false,
-    label: 'Chain',
+    label: t`Chain`,
   },
   {
     id: 'address',
     numeric: false,
     disablePadding: false,
-    label: 'Address',
+    label: t`Address`,
   },
   {
     id: 'decimals',
     numeric: false,
     disablePadding: false,
-    label: 'Decimals',
+    label: t`Decimals`,
   },
   {
     id: 'symbol',
     numeric: false,
     disablePadding: false,
-    label: 'Symbol',
+    label: t`Symbol`,
   },
   {
     id: 'total',
     numeric: false,
     disablePadding: false,
-    label: 'Amount',
+    label: t`Amount`,
   },
   {
     id: 'creator',
     numeric: false,
     disablePadding: false,
-    label: 'Creator',
+    label: t`Creator`,
   },
 ]
 
@@ -87,7 +88,7 @@ function MyTableHead({ order, orderBy, onRequestSort }: MyTableHeaderProps) {
     <TableHead>
       <TableRow>
         <TableCell key={'action'} align={'left'} padding={'normal'}>
-          Action
+          <Trans>Action</Trans>
         </TableCell>
 
         {headCells.map((headCell) => (

@@ -6,7 +6,103 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: zh-CN\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Action"
+msgstr "操作"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Address"
+msgstr "地址"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Amount"
+msgstr "数量"
+
+#: src/layouts/dashboard/SidebarConfig.tsx
+msgid "Calculator"
+msgstr "计算器"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Chain"
+msgstr "链"
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Contract Call"
+msgstr ""
+
+#: src/components/Dialog/CreateDialog.tsx
+#: src/components/Dialog/CreateTokenForm.tsx
+#: src/pages/Token/Create.tsx
+msgid "Create"
+msgstr "创建"
+
+#: src/pages/Token/Create.tsx
+msgid "Create Success"
+msgstr "创建成功"
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Create Token"
+msgstr "创建Token"
+
+#: src/pages/Token/Create.tsx
+msgid "Create success"
+msgstr "创建成功"
+
+#: src/pages/Token/CreateTokenTable.tsx
+msgid "Creator"
+msgstr "创建者"
+
+#: src/pages/Token/CreateTokenTable.tsx
+msgid "Decimals"
+msgstr ""
+
+#: src/layouts/dashboard/SidebarConfig.tsx
 #: src/pages/Token/Receive.tsx
 msgid "Faucet"
 msgstr "水龙头"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Id"
+msgstr ""
+
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Native Amount"
+msgstr "原生代币数量"
+
+#: src/components/Dialog/CreateDialog.tsx
+msgid "Notice: Please use the private key of the test account. Otherwise there is a risk that the funds will be stolen!"
+msgstr "注意: 请使用测试帐号的私钥。否则会有资金被盗的风险!"
+
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Provider"
+msgstr "提供者"
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Receive Token"
+msgstr "接收Token"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Symbol"
+msgstr ""
+
+#: src/components/Dashboard/listItems.tsx
+#: src/layouts/dashboard/SidebarConfig.tsx
+#: src/pages/Token/Create.tsx
+msgid "Tokens"
+msgstr "加密货币"

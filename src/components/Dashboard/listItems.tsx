@@ -20,6 +20,7 @@ import {
 } from '@mui/icons-material'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components/macro'
+import { t } from '@lingui/macro'
 
 const Wrapper = styled.div`
   a,
@@ -98,7 +99,7 @@ export function NavList() {
                   <SendIcon sx={{ color: '#ffffff' }} />
                 </ListItemIcon>
 
-                <ListItemText primary={`Contract Call`} />
+                <ListItemText primary={t`Contract Call`} />
               </ActiveMyListItemButton>
             ) : (
               <MyListItemButton>
@@ -106,7 +107,7 @@ export function NavList() {
                   <SendIcon />
                 </ListItemIcon>
 
-                <ListItemText primary={`Contract Call`} />
+                <ListItemText primary={t`Contract Call`} />
               </MyListItemButton>
             )
           }
@@ -116,7 +117,7 @@ export function NavList() {
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary="Tokens" />
+          <ListItemText primary={t`Tokens`} />
 
           {open ? <ExpandLess /> : <ExpandMore />}
         </MyListItemButton>
@@ -126,11 +127,11 @@ export function NavList() {
               {({ isActive }) =>
                 isActive ? (
                   <ActiveMyListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary={`Create Token`} />
+                    <ListItemText primary={t`Create Token`} />
                   </ActiveMyListItemButton>
                 ) : (
                   <MyListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="Create Token" />
+                    <ListItemText primary={t`Create Token`} />
                   </MyListItemButton>
                 )
               }
@@ -140,11 +141,11 @@ export function NavList() {
               {({ isActive }) =>
                 isActive ? (
                   <ActiveMyListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary={`Receive Token`} />
+                    <ListItemText primary={t`Receive Token`} />
                   </ActiveMyListItemButton>
                 ) : (
                   <MyListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="Receive Token" />
+                    <ListItemText primary={t`Receive Token`} />
                   </MyListItemButton>
                 )
               }
@@ -198,30 +199,6 @@ export const mainListItems = (
         <LayersIcon />
       </ListItemIcon>
       <ListItemText primary="Integrations" />
-    </ListItem>
-  </div>
-)
-
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
     </ListItem>
   </div>
 )

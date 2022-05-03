@@ -6,7 +6,103 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: zh-TW\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Action"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Address"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Amount"
+msgstr ""
+
+#: src/layouts/dashboard/SidebarConfig.tsx
+msgid "Calculator"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Chain"
+msgstr ""
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Contract Call"
+msgstr ""
+
+#: src/components/Dialog/CreateDialog.tsx
+#: src/components/Dialog/CreateTokenForm.tsx
+#: src/pages/Token/Create.tsx
+msgid "Create"
+msgstr ""
+
+#: src/pages/Token/Create.tsx
+msgid "Create Success"
+msgstr ""
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Create Token"
+msgstr ""
+
+#: src/pages/Token/Create.tsx
+msgid "Create success"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+msgid "Creator"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+msgid "Decimals"
+msgstr ""
+
+#: src/layouts/dashboard/SidebarConfig.tsx
 #: src/pages/Token/Receive.tsx
 msgid "Faucet"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Id"
+msgstr ""
+
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Native Amount"
+msgstr ""
+
+#: src/components/Dialog/CreateDialog.tsx
+msgid "Notice: Please use the private key of the test account. Otherwise there is a risk that the funds will be stolen!"
+msgstr ""
+
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Provider"
+msgstr ""
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Receive Token"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Symbol"
+msgstr ""
+
+#: src/components/Dashboard/listItems.tsx
+#: src/layouts/dashboard/SidebarConfig.tsx
+#: src/pages/Token/Create.tsx
+msgid "Tokens"
 msgstr ""

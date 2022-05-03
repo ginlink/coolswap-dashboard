@@ -50,6 +50,7 @@
     "react-router-dom": "6",
     "react-scripts": "4",
     "recharts": "^2.1.8",
+    "redux-localstorage-simple": "^2.5.1",
     "simplebar": "^5.3.5",
     "simplebar-react": "^2.3.5",
     "styled-components": "latest",
