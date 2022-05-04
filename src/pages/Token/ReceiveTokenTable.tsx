@@ -15,9 +15,10 @@ import {
   Typography,
 } from '@mui/material'
 import { visuallyHidden } from '@mui/utils'
-import React, { useCallback, useState, useMemo, Fragment } from 'react'
+import React, { useCallback, useState, useMemo, Fragment, ReactNode } from 'react'
 import { Actions } from './ReceiveTokenMoreMenu'
 import { ActionState } from './types'
+import { t, Trans } from '@lingui/macro'
 
 export type FaucetDataItem = {
   id: number
@@ -32,7 +33,7 @@ export type FaucetDataItem = {
 export type HeadCell = {
   disablePadding: boolean
   id: keyof FaucetDataItem
-  label: string
+  label: ReactNode
   numeric: boolean
 }
 
@@ -41,43 +42,43 @@ const headCells: readonly HeadCell[] = [
     id: 'id',
     numeric: true,
     disablePadding: false,
-    label: 'Id',
+    label: `Id`,
   },
   {
     id: 'chain_id',
     numeric: true,
     disablePadding: false,
-    label: 'Chain',
+    label: <Trans>Chain</Trans>,
   },
   {
     id: 'address',
     numeric: false,
     disablePadding: false,
-    label: 'Address',
+    label: <Trans>Address</Trans>,
   },
   {
     id: 'symbol',
     numeric: false,
     disablePadding: false,
-    label: 'Symbol',
+    label: <Trans>Symbol</Trans>,
   },
   {
     id: 'left_amount',
     numeric: false,
     disablePadding: false,
-    label: 'Amount',
+    label: <Trans>Amount</Trans>,
   },
   {
     id: 'left_native',
     numeric: false,
     disablePadding: false,
-    label: 'Native Amount',
+    label: <Trans>Native Amount</Trans>,
   },
   {
     id: 'admin',
     numeric: false,
     disablePadding: false,
-    label: 'Provider',
+    label: <Trans>Provider</Trans>,
   },
 ]
 
@@ -96,7 +97,7 @@ function MyTableHead({ order, orderBy, onRequestSort }: MyTableHeaderProps) {
     <TableHead>
       <TableRow>
         <TableCell key={'action'} align={'left'} padding={'normal'}>
-          Action
+          <Trans>Action</Trans>
         </TableCell>
 
         {headCells.map((headCell) => (
@@ -134,7 +135,7 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof FaucetDataItem>('id')
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(15)
 
   const handleRequestSort = useCallback(
     (event: React.MouseEvent<unknown>, property: keyof FaucetDataItem) => {
@@ -181,7 +182,7 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
 
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    <TableCell align="right">
+                    <TableCell align="right" sx={{ minWidth: '80px' }}>
                       <Actions onAction={(e: any, action: ActionState) => onAction && onAction(e, action, row)} />
                     </TableCell>
                     <TableCell component="th" id={labelId} scope="row">
@@ -197,7 +198,9 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
                     <TableCell align="left">
                       <Typography color="success.dark">{computeNumUnitAdapter(row.left_amount)}</Typography>
                     </TableCell>
-                    <TableCell align="left">{computeNumUnitAdapter(row.left_native)}</TableCell>
+                    <TableCell align="left" sx={{ minWidth: '100px' }}>
+                      {computeNumUnitAdapter(row.left_native)}
+                    </TableCell>
                     <TableCell align="left">{row.admin}</TableCell>
                   </TableRow>
                 )
@@ -225,11 +228,12 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[15, 25, 50]}
         component="div"
         count={rows?.length ?? 0}
         rowsPerPage={rowsPerPage}
         page={page}
+        labelRowsPerPage={<Trans>Rows per page:</Trans>}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />

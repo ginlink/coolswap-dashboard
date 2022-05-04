@@ -23,7 +23,7 @@ import { useFaucetList } from '@/state/http/hooks'
 import { addToken } from '@/utils/token'
 import { switchToNetwork } from '@/utils/switchToNetwork'
 import { ActionState } from './types'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 export const DEFAULT_RECEIVE_AMOUNT = 1000
 
@@ -86,7 +86,7 @@ export default function ReceiveToken() {
             break
           case ActionState.ADD_TO_METAMASK:
             if (!library || !chainId) {
-              throw new Error('Connect wallet first')
+              throw new Error(t`Connect wallet first`)
             }
 
             if (chain_id != chainId) {
@@ -175,7 +175,7 @@ export default function ReceiveToken() {
 
         updateFaucetList111()
         setCreateFaucetOpen(false)
-        alertSuccessMessage('Create success')
+        alertSuccessMessage(t`Create success`)
       } catch (err: any) {
         console.log('[err]:', err)
         alertErrorMessage(err.message || UNKNOWN_ERROR_STR)
@@ -188,14 +188,14 @@ export default function ReceiveToken() {
     async (values: { private_key: string }) => {
       try {
         if (!currentRow) {
-          return alertErrorMessage('Invalid delete id')
+          return alertErrorMessage(t`Invalid delete id`)
         }
 
         const { private_key } = values
         const { id } = currentRow
 
         await deleteReceiveTokenApi(id, private_key)
-        alertSuccessMessage('Delete success')
+        alertSuccessMessage(t`Delete success`)
         updateFaucetList111()
         setDeleteTokenOpen(false)
       } catch (err: any) {
@@ -229,7 +229,9 @@ export default function ReceiveToken() {
             startIcon={<Icon icon={plusFill} />}
             onClick={() => setCreateFaucetOpen(true)}
           >
-            <Typography variant="body1">Create</Typography>
+            <Typography variant="body1">
+              <Trans>Create</Trans>
+            </Typography>
           </Button>
         </Stack>
 
@@ -251,7 +253,7 @@ export default function ReceiveToken() {
 
       <ReceiveSuccessDialog
         open={receiveSuccessOpen}
-        title={'Receive Success'}
+        title={t`Receive Success`}
         hash={hash}
         onClose={() => setReceiveSuccessOpen((prev) => !prev)}
       />

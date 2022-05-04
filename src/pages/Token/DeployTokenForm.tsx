@@ -3,6 +3,7 @@ import { LoadingButton } from '@mui/lab'
 import { Stack, TextField, InputAdornment, IconButton, Checkbox, Typography } from '@mui/material'
 import { Form, FormikProvider, useFormik } from 'formik'
 import * as Yup from 'yup'
+import { t, Trans } from '@lingui/macro'
 import React from 'react'
 
 export default function DeployTokenForm({ onSubmit }: { onSubmit: (values: any) => void }) {
@@ -104,7 +105,7 @@ export default function DeployTokenForm({ onSubmit }: { onSubmit: (values: any) 
             fullWidth
             autoComplete="current-password"
             type={'number'}
-            label="total amount"
+            label={t`Total amount`}
             {...getFieldProps('total')}
             InputProps={{
               endAdornment: (
@@ -122,7 +123,9 @@ export default function DeployTokenForm({ onSubmit }: { onSubmit: (values: any) 
           <Stack direction={'row'} alignItems={'center'}>
             <Checkbox defaultChecked {...getFieldProps('checked')} />
 
-            <Typography>Whether to join the List?</Typography>
+            <Typography>
+              <Trans>Whether to join the List?</Trans>
+            </Typography>
           </Stack>
         </Stack>
 
@@ -134,7 +137,7 @@ export default function DeployTokenForm({ onSubmit }: { onSubmit: (values: any) 
           loading={isSubmitting}
           disabled={!isValid}
         >
-          Create
+          <Trans>Create</Trans>
         </LoadingButton>
       </Form>
     </FormikProvider>

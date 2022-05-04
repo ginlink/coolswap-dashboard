@@ -5,13 +5,14 @@
   "scripts": {
     "tsc": "./node_modules/.bin/tsc",
     "start": "craco start",
+    "build:dev": "dotenv -e .env.development craco build",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject",
     "compile-external-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types './src/abis/**/*.json'",
     "i18n:extract": "lingui extract",
     "i18n:extract:en": "lingui extract --locale en-US",
-    "i18n:extract:cn": "lingui extract --locale zh-CN"
+    "i18n:extract:cn": "lingui extract --locale zh-CN",
+    "i18n:compile": "lingui compile"
   },
   "dependencies": {
     "@iconify-icons/akar-icons": "^1.2.3",
@@ -50,6 +51,7 @@
     "react-router-dom": "6",
     "react-scripts": "4",
     "recharts": "^2.1.8",
+    "redux-localstorage-simple": "^2.5.1",
     "simplebar": "^5.3.5",
     "simplebar-react": "^2.3.5",
     "styled-components": "latest",
@@ -69,12 +71,12 @@
     "@types/react-dom": "latest",
     "@types/styled-components": "latest",
     "craco-alias": "^3.0.1",
+    "dotenv-cli": "^5.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "^2.5.1",
-    "react-i18next": "latest",
     "typechain": "^7.0.0",
     "typescript": "latest"
   },

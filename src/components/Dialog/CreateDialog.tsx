@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogTitle, Paper, Typography } from '@mui/material'
 import CreateTokenForm from './CreateTokenForm'
+import { Trans } from '@lingui/macro'
 import React from 'react'
 
 export default function CreateDialog({
@@ -14,11 +15,15 @@ export default function CreateDialog({
   return (
     <Paper>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Create</DialogTitle>
+        <DialogTitle>
+          <Trans>Create</Trans>
+        </DialogTitle>
         <DialogContent>
           <Typography variant="subtitle2" sx={{ maxWidth: '400px' }}>
-            Notice: Please use the private key of the test account. Otherwise there is a risk that the funds will be
-            stolen!
+            <Trans>
+              Notice: Please use the private key of the test account. Otherwise there is a risk that the funds will be
+              stolen!
+            </Trans>
           </Typography>
           <CreateTokenForm onSubmit={onSubmit} />
         </DialogContent>

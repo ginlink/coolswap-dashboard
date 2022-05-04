@@ -20,6 +20,7 @@ import { compareAddress } from '@/utils/address'
 import ListToolbar from '@/components/ListToolbar'
 import { applySortFilter } from '@/utils/sort'
 import { useTokenList } from '@/state/http/hooks'
+import { t, Trans } from '@lingui/macro'
 
 export default function CreateToken() {
   const { library, chainId, account } = useActiveWeb3React()
@@ -84,7 +85,7 @@ export default function CreateToken() {
         setHash(res.transactionHash)
         setCreateTokenOpen(false)
         setReceiveSuccessOpen(true)
-        alertSuccess('Create success')
+        alertSuccess(t`Create success`)
       } catch (err: any) {
         alertError(err.message || UNKNOWN_ERROR_STR)
       }
@@ -145,7 +146,7 @@ export default function CreateToken() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Tokens
+            <Trans>Tokens</Trans>
           </Typography>
           <Button
             variant="contained"
@@ -154,7 +155,9 @@ export default function CreateToken() {
             startIcon={<Icon icon={plusFill} />}
             onClick={() => setCreateTokenOpen(true)}
           >
-            <Typography variant="body1">Create</Typography>
+            <Typography variant="body1">
+              <Trans>Create</Trans>
+            </Typography>
           </Button>
         </Stack>
 
@@ -187,7 +190,7 @@ export default function CreateToken() {
 
       <ReceiveSuccessDialog
         open={receiveSuccessOpen}
-        title={'Create Success'}
+        title={t`Create Success`}
         hash={hash}
         onClose={() => setReceiveSuccessOpen((prev) => !prev)}
       />

@@ -3,11 +3,12 @@ import { LoadingButton } from '@mui/lab'
 import { Stack, TextField, InputAdornment, IconButton } from '@mui/material'
 import { Form, FormikProvider, useFormik } from 'formik'
 import * as Yup from 'yup'
+import { t, Trans } from '@lingui/macro'
 import React from 'react'
 
 export default function DeleteTokenForm({ onSubmit }: { onSubmit: (values: any) => void }) {
   const schema = Yup.object().shape({
-    private_key: Yup.string().required('Private key is required'),
+    private_key: Yup.string().required(t`Private key is required`),
   })
 
   const formik = useFormik({
@@ -32,7 +33,7 @@ export default function DeleteTokenForm({ onSubmit }: { onSubmit: (values: any) 
             fullWidth
             autoComplete="current-password"
             type={'text'}
-            label="Private key"
+            label={t`Private key`}
             {...getFieldProps('private_key')}
             InputProps={{
               endAdornment: (
@@ -56,7 +57,7 @@ export default function DeleteTokenForm({ onSubmit }: { onSubmit: (values: any) 
           loading={isSubmitting}
           disabled={!isValid}
         >
-          Delete
+          <Trans>Delete</Trans>
         </LoadingButton>
       </Form>
     </FormikProvider>

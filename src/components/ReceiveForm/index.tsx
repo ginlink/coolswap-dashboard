@@ -3,8 +3,9 @@ import { LoadingButton } from '@mui/lab'
 import { Stack, TextField, InputAdornment, IconButton } from '@mui/material'
 import { FormikProvider, Form, useFormik } from 'formik'
 import DeleteIcon from '@mui/icons-material/Delete'
-import React from 'react'
 import { DEFAULT_RECEIVE_AMOUNT } from '@/pages/Token/Receive'
+import { t, Trans } from '@lingui/macro'
+import React from 'react'
 
 export default function ReceiveForm({ onSubmit }: { onSubmit: (values: any) => void }) {
   const schema = Yup.object().shape({
@@ -35,7 +36,7 @@ export default function ReceiveForm({ onSubmit }: { onSubmit: (values: any) => v
             fullWidth
             autoComplete="current-password"
             type={'text'}
-            label="Receive Address"
+            label={t`Receive Address`}
             {...getFieldProps('address')}
             InputProps={{
               endAdornment: (
@@ -53,7 +54,7 @@ export default function ReceiveForm({ onSubmit }: { onSubmit: (values: any) => v
             fullWidth
             autoComplete="current-password"
             type={'text'}
-            label="Amount"
+            label={t`Amount`}
             {...getFieldProps('amount')}
             InputProps={{
               endAdornment: (
@@ -70,7 +71,7 @@ export default function ReceiveForm({ onSubmit }: { onSubmit: (values: any) => v
         </Stack>
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-          Receive
+          <Trans>Receive</Trans>
         </LoadingButton>
       </Form>
     </FormikProvider>

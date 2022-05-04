@@ -6,7 +6,225 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: zh-TW\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Action"
+msgstr ""
+
+#: src/pages/Token/data.ts
+msgid "Add to Metamask"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Address"
+msgstr ""
+
+#: src/components/ReceiveForm/index.tsx
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Amount"
+msgstr ""
+
+#: src/components/SendTokenForm/index.tsx
+msgid "Amount key is required"
+msgstr ""
+
+#: src/layouts/dashboard/SidebarConfig.tsx
+msgid "Calculator"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Chain"
+msgstr ""
+
+#: src/pages/Token/Receive.tsx
+msgid "Connect wallet first"
+msgstr ""
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Contract Call"
+msgstr ""
+
+#: src/components/Dialog/CreateDialog.tsx
+#: src/components/Dialog/CreateTokenForm.tsx
+#: src/pages/Token/Create.tsx
+#: src/pages/Token/DeployTokenForm.tsx
+#: src/pages/Token/Receive.tsx
+msgid "Create"
+msgstr ""
+
+#: src/pages/Token/Create.tsx
+msgid "Create Success"
+msgstr ""
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+#: src/pages/Token/CreateTokenDialog.tsx
+msgid "Create Token"
+msgstr ""
+
+#: src/pages/Token/Create.tsx
+#: src/pages/Token/Receive.tsx
+msgid "Create success"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+msgid "Creator"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+msgid "Decimals"
+msgstr ""
+
+#: src/components/Dialog/DeleteDialog.tsx
+#: src/components/Dialog/DelteTokenForm.tsx
+#: src/pages/Token/data.ts
+msgid "Delete"
+msgstr ""
+
+#: src/pages/Token/Receive.tsx
+msgid "Delete success"
+msgstr ""
+
+#: src/components/Dialog/DeleteDialog.tsx
+msgid "Enter private key for verifying"
+msgstr ""
+
+#: src/layouts/dashboard/SidebarConfig.tsx
 #: src/pages/Token/Receive.tsx
 msgid "Faucet"
 msgstr ""
+
+#: src/pages/Calculator/index.tsx
+msgid "Flat price"
+msgstr ""
+
+#: src/layouts/dashboard/DashboardNavbar.tsx
+#~ msgid "Hello World"
+#~ msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+#~ msgid "Id"
+#~ msgstr ""
+
+#: src/pages/Token/Receive.tsx
+#: src/pages/Token/Receive.tsx
+msgid "Invalid delete id"
+msgstr ""
+
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Native Amount"
+msgstr ""
+
+#: src/components/Dialog/CreateDialog.tsx
+#: src/components/Dialog/DeleteDialog.tsx
+msgid "Notice: Please use the private key of the test account. Otherwise there is a risk that the funds will be stolen!"
+msgstr ""
+
+#: src/components/Dialog/CreateTokenForm.tsx
+#: src/components/Dialog/DelteTokenForm.tsx
+msgid "Private key"
+msgstr ""
+
+#: src/components/Dialog/CreateTokenForm.tsx
+#: src/components/Dialog/DelteTokenForm.tsx
+msgid "Private key is required"
+msgstr ""
+
+#: src/pages/Calculator/index.tsx
+msgid "Profit"
+msgstr ""
+
+#: src/pages/Calculator/index.tsx
+msgid "Profit stop price"
+msgstr ""
+
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Provider"
+msgstr ""
+
+#: src/components/ReceiveForm/index.tsx
+#: src/pages/Token/ReceiveDialog.tsx
+msgid "Receive"
+msgstr ""
+
+#: src/components/ReceiveForm/index.tsx
+msgid "Receive Address"
+msgstr ""
+
+#: src/pages/Token/Receive.tsx
+msgid "Receive Success"
+msgstr ""
+
+#: src/components/Dashboard/listItems.tsx
+#: src/components/Dashboard/listItems.tsx
+msgid "Receive Token"
+msgstr ""
+
+#: src/pages/Token/data.ts
+msgid "Receive token"
+msgstr ""
+
+#: src/pages/Token/SendDialog.tsx
+msgid "Receiver"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Rows per page:"
+msgstr ""
+
+#: src/components/ListToolbar/index.tsx
+msgid "Search ..."
+msgstr ""
+
+#: src/components/SendTokenForm/index.tsx
+#: src/pages/Token/SendDialog.tsx
+msgid "Send"
+msgstr ""
+
+#: src/components/SendTokenForm/index.tsx
+msgid "Send Amount"
+msgstr ""
+
+#: src/pages/Token/data.ts
+msgid "Send token"
+msgstr ""
+
+#: src/pages/Calculator/index.tsx
+msgid "Stop price"
+msgstr ""
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Symbol"
+msgstr ""
+
+#: src/components/Dashboard/listItems.tsx
+#: src/layouts/dashboard/SidebarConfig.tsx
+#: src/pages/Token/Create.tsx
+msgid "Tokens"
+msgstr ""
+
+#: src/pages/Token/DeployTokenForm.tsx
+msgid "Total amount"
+msgstr ""
+
+#: src/pages/Token/DeployTokenForm.tsx
+msgid "Whether to join the List?"
+msgstr ""
+
+#: src/layouts/dashboard/DashboardNavbar.tsx
+#~ msgid "example"
+#~ msgstr ""

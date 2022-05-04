@@ -3,11 +3,12 @@ import { LoadingButton } from '@mui/lab'
 import { Stack, TextField, InputAdornment, IconButton } from '@mui/material'
 import { Form, FormikProvider, useFormik } from 'formik'
 import * as Yup from 'yup'
+import { t, Trans } from '@lingui/macro'
 import React from 'react'
 
 export default function SendTokenForm({ onSubmit }: { onSubmit: (values: any) => void }) {
   const schema = Yup.object().shape({
-    amount: Yup.string().required('Amount key is required'),
+    amount: Yup.string().required(t`Amount key is required`),
   })
 
   const formik = useFormik({
@@ -32,7 +33,7 @@ export default function SendTokenForm({ onSubmit }: { onSubmit: (values: any) =>
             fullWidth
             autoComplete="current-password"
             type={'text'}
-            label="Send Amount"
+            label={t`Send Amount`}
             {...getFieldProps('amount')}
             InputProps={{
               endAdornment: (
@@ -56,7 +57,7 @@ export default function SendTokenForm({ onSubmit }: { onSubmit: (values: any) =>
           loading={isSubmitting}
           disabled={!isValid}
         >
-          Send
+          <Trans>Send</Trans>
         </LoadingButton>
       </Form>
     </FormikProvider>

@@ -75,23 +75,8 @@ const plurals: LocalePlural = {
   // 'zh-TW': zh,
 }
 
-// async function importMessages(locale: string) {
-//   switch (locale) {
-//     case 'cs':
-//       // @ts-ignore
-//       return await import('messages.js!=!@lingui/loader!./locales/cs/messages.po')
-//     case 'en':
-//     default:
-//       // @ts-ignore
-//       // eslint-disable-next-line import/no-webpack-loader-syntax
-//       return await import('messages.js!=!@lingui/loader!./locales/en/messages.po')
-//   }
-// }
-
 export async function dynamicActivate(locale: SupportedLocale) {
   const { messages } = await import(`@lingui/loader!./locales/${locale}.po`)
-  const values = await import(`@lingui/loader!./locales/${locale}.po`)
-  debugger
   i18n.loadLocaleData(locale, { plurals: () => plurals[locale] })
   i18n.load(locale, messages)
   i18n.activate(locale)
@@ -101,10 +86,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useSetLocaleFromUrl()
   const locale = useActiveLocale()
   const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    console.log('[locale]:', locale)
-  }, [locale])
 
   useEffect(() => {
     dynamicActivate(locale)
