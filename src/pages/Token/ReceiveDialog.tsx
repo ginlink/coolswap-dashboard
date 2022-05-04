@@ -1,6 +1,7 @@
 import ReceiveForm from '@/components/ReceiveForm'
 import { Box, Chip, Dialog, DialogContent, DialogTitle, Stack, Typography } from '@mui/material'
 import { FaucetDataItem } from './ReceiveTokenTable'
+import { Trans } from '@lingui/macro'
 import React, { useMemo } from 'react'
 
 export default function ReceiveDialog({
@@ -20,7 +21,9 @@ export default function ReceiveDialog({
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
         <Stack direction={'row'} alignItems={'center'} spacing={1}>
-          <Typography variant={'h5'}>Receive {symbol}</Typography>
+          <Typography variant={'h5'}>
+            <Trans>Receive</Trans> {symbol}
+          </Typography>
           <Chip label={chain_id} color="primary" />
         </Stack>
       </DialogTitle>

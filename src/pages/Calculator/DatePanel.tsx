@@ -1,7 +1,7 @@
 import { computeNumUnitAdapter } from '@/utils/formatNum'
 import { Stack, Typography } from '@mui/material'
 import { alpha, useTheme, styled } from '@mui/material/styles'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 const Wrapper = styled('div')(({ theme }: { theme: any }) => ({
   // position: 'relative',
@@ -29,7 +29,7 @@ export default function DatePanel({
   rate1,
   rate1_price,
 }: {
-  label: string | undefined
+  label: ReactNode | undefined
   value: string | undefined
   rate0?: string
   rate1?: string

@@ -4,14 +4,14 @@ import { Stack, TextField, InputAdornment, IconButton, Autocomplete, Box } from 
 import { Form, FormikProvider, useFormik } from 'formik'
 import * as Yup from 'yup'
 import { chainIds } from './data'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import React from 'react'
 
 export default function CreateTokenForm({ onSubmit }: { onSubmit: (values: any) => void }) {
   const schema = Yup.object().shape({
     chain_id: Yup.number().required('Chain id is required'),
     address: Yup.string().required('Address is required'),
-    private_key: Yup.string().required('Private key is required'),
+    private_key: Yup.string().required(t`Private key is required`),
   })
 
   const formik = useFormik({
@@ -83,7 +83,7 @@ export default function CreateTokenForm({ onSubmit }: { onSubmit: (values: any) 
             fullWidth
             autoComplete="current-password"
             type={'text'}
-            label="Private key"
+            label={t`Private key`}
             {...getFieldProps('private_key')}
             InputProps={{
               endAdornment: (

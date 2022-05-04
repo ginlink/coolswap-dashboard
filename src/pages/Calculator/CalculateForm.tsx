@@ -1,10 +1,9 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 import { LoadingButton } from '@mui/lab'
-import { Stack, TextField, InputAdornment, IconButton, Autocomplete, Box, Select, MenuItem } from '@mui/material'
+import { Stack, TextField, InputAdornment, IconButton, Autocomplete, Box } from '@mui/material'
 import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik'
 import * as Yup from 'yup'
 import React from 'react'
-import { countries } from './country'
 
 export enum Direction {
   UP = 'UP',
@@ -19,7 +18,6 @@ export default function CalculateForm({
   onSubmit: (values: any, formikHelpers: FormikHelpers<any>) => void
 }) {
   const schema = Yup.object().shape({
-    curr_token: Yup.string(),
     direction: Yup.string().required('The direction is required'),
     curr_price: Yup.number().required('The current price is required'),
     mul: Yup.number().required('A multiple is required'),
@@ -31,7 +29,6 @@ export default function CalculateForm({
   const formik = useFormik({
     initialValues: {
       direction: '',
-      curr_token: '',
       curr_price: '',
       mul: '',
       in_price: '',
@@ -78,7 +75,7 @@ export default function CalculateForm({
             )}
           />
 
-          <Autocomplete
+          {/* <Autocomplete
             // fullWidth
             options={countries}
             autoHighlight
@@ -110,7 +107,7 @@ export default function CalculateForm({
                 helperText={touched.curr_token && errors.curr_token}
               />
             )}
-          />
+          /> */}
 
           <TextField
             fullWidth

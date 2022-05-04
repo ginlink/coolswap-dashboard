@@ -2,14 +2,14 @@ import PropTypes from 'prop-types'
 import { Icon } from '@iconify/react'
 import menu2Fill from '@iconify/icons-eva/menu-2-fill'
 import Web3NetWork from '@/components/Web3NetWork'
-import React from 'react'
+import React, { useMemo } from 'react'
 // material
 import { alpha, styled } from '@mui/material/styles'
 import { Box, AppBar, Toolbar, IconButton, Stack } from '@mui/material'
 // components
 import { MHidden } from '../../components/@material-extend'
-import { useActiveWeb3React } from '@/hooks/web3'
 import Language from '@/components/Language/Language'
+
 //
 // import Searchbar from './Searchbar'
 // import AccountPopover from './AccountPopover'
@@ -49,8 +49,6 @@ DashboardNavbar.propTypes = {
 }
 
 export default function DashboardNavbar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
-  const { chainId } = useActiveWeb3React()
-
   return (
     <RootStyle>
       <ToolbarStyle>

@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogTitle, Paper, Typography } from '@mui/material'
-import React from 'react'
 import DeployTokenForm from './DeployTokenForm'
+import { Trans } from '@lingui/macro'
+import React from 'react'
 
 export default function CreateTokenDialog({
   open,
@@ -14,7 +15,9 @@ export default function CreateTokenDialog({
   return (
     <Paper>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Create Token</DialogTitle>
+        <DialogTitle>
+          <Trans>Create Token</Trans>
+        </DialogTitle>
         <DialogContent
           sx={{
             minWidth: ['300px', '420px'],

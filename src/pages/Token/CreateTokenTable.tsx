@@ -17,14 +17,14 @@ import {
 import { visuallyHidden } from '@mui/utils'
 import MoreMenuToken, { ActionStateToken } from './MoreMenuToken'
 import { t, Trans } from '@lingui/macro'
-import React, { useCallback, useState, useMemo } from 'react'
+import React, { useCallback, useState, useMemo, ReactNode } from 'react'
 
 export type TokenDataItem = Omit<TokenListItem, 'created_at' | 'updated_at'>
 
 export type HeadCell = {
   disablePadding: boolean
   id: keyof TokenDataItem
-  label: string
+  label: ReactNode
   numeric: boolean
 }
 
@@ -33,43 +33,43 @@ const headCells: readonly HeadCell[] = [
     id: 'id',
     numeric: true,
     disablePadding: false,
-    label: t`Id`,
+    label: `Id`,
   },
   {
     id: 'chain_id',
     numeric: true,
     disablePadding: false,
-    label: t`Chain`,
+    label: <Trans>Chain</Trans>,
   },
   {
     id: 'address',
     numeric: false,
     disablePadding: false,
-    label: t`Address`,
+    label: <Trans>Address</Trans>,
   },
   {
     id: 'decimals',
     numeric: false,
     disablePadding: false,
-    label: t`Decimals`,
+    label: <Trans>Decimals</Trans>,
   },
   {
     id: 'symbol',
     numeric: false,
     disablePadding: false,
-    label: t`Symbol`,
+    label: <Trans>Symbol</Trans>,
   },
   {
     id: 'total',
     numeric: false,
     disablePadding: false,
-    label: t`Amount`,
+    label: <Trans>Amount</Trans>,
   },
   {
     id: 'creator',
     numeric: false,
     disablePadding: false,
-    label: t`Creator`,
+    label: <Trans>Creator</Trans>,
   },
 ]
 
@@ -126,7 +126,7 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof TokenDataItem>('id')
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(15)
 
   const handleRequestSort = useCallback(
     (event: React.MouseEvent<unknown>, property: keyof TokenDataItem) => {
@@ -219,11 +219,12 @@ export default function ReceiveTokenTable({ dataList: rows, onAction }: ReceiveT
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[15, 25, 50]}
         component="div"
         count={rows?.length ?? 0}
         rowsPerPage={rowsPerPage}
         page={page}
+        labelRowsPerPage={<Trans>Rows per page:</Trans>}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />

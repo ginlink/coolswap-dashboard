@@ -1,11 +1,11 @@
-import CountrySelect from '@/components/CountrySelect'
-import { Card, Grid, Stack, Typography } from '@mui/material'
-import { borderRight, useTheme } from '@mui/system'
+import { Card, Grid, Stack } from '@mui/material'
+import { useTheme } from '@mui/system'
 import BigNumber from 'bignumber.js'
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import CalculateForm, { Direction } from './CalculateForm'
 import DatePanel from './DatePanel'
+import { t, Trans } from '@lingui/macro'
 
 type CalcData = {
   stop_loss_price?: BigNumber
@@ -53,8 +53,6 @@ export default function Calculator() {
           >
             <CalculateForm
               onSubmit={function (values: any, helper): void {
-                console.log('[]:', '提交')
-                console.log('[values]:', values)
                 const { curr_price, mul, in_price, earn_price, loss_price, direction } = values
 
                 const loss_rate0 = new BigNumber(loss_price / in_price)
@@ -114,21 +112,21 @@ export default function Calculator() {
           >
             <Stack spacing={2}>
               <DatePanel
-                label={'止损价格'}
+                label={<Trans>Stop price</Trans>}
                 value={calcDate.stop_loss_price?.toFixed()}
                 rate0={calcDate.loss_rate0?.toFixed(2)}
                 rate1={calcDate.loss_rate1?.toFixed(2)}
                 rate1_price={calcDate.loss_rate1_price?.toFixed()}
               />
               <DatePanel
-                label={'止盈价格'}
+                label={<Trans>Profit stop price</Trans>}
                 value={calcDate.stop_earn_price?.toFixed()}
                 rate0={calcDate.earn_rate0?.toFixed(2)}
                 rate1={calcDate.earn_rate1?.toFixed(2)}
                 rate1_price={calcDate.earn_rate1_price?.toFixed()}
               />
-              <DatePanel label={'强平价格'} value={calcDate.flat_price?.toFixed()} />
-              <DatePanel label={'收益'} value={calcDate.earned?.toFixed()} />
+              <DatePanel label={<Trans>Flat price</Trans>} value={calcDate.flat_price?.toFixed()} />
+              <DatePanel label={<Trans>Profit</Trans>} value={calcDate.earned?.toFixed()} />
             </Stack>
           </Grid>
         </Grid>

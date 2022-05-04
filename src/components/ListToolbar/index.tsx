@@ -1,9 +1,9 @@
-import { Box, IconButton, InputAdornment, OutlinedInput, Toolbar, Tooltip } from '@mui/material'
+import { Box, InputAdornment, OutlinedInput, Toolbar } from '@mui/material'
 import React from 'react'
 import styled from 'styled-components/macro'
 import searchFill from '@iconify/icons-eva/search-fill'
-import roundFilterList from '@iconify/icons-ic/round-filter-list'
 import { Icon } from '@iconify/react'
+import { t } from '@lingui/macro'
 
 const RootStyle = styled(Toolbar)(({ theme }) => ({
   height: 96,
@@ -37,7 +37,7 @@ export default function ListToolbar({
       <SearchStyle
         value={filterValue}
         onChange={(e) => onFilterValue(e.target.value)}
-        placeholder="Search ..."
+        placeholder={`Search ...`}
         startAdornment={
           <InputAdornment position="start">
             <Box component={Icon} icon={searchFill} sx={{ color: 'text.disabled' }} />

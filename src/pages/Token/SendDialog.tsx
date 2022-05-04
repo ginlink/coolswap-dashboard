@@ -1,7 +1,8 @@
 import SendTokenForm from '@/components/SendTokenForm'
 import { Chip, Dialog, DialogContent, DialogTitle, Paper, Stack, Typography } from '@mui/material'
-import React, { useMemo } from 'react'
 import { FaucetDataItem } from './ReceiveTokenTable'
+import { Trans } from '@lingui/macro'
+import React, { useMemo } from 'react'
 
 export default function CreateDialog({
   open,
@@ -21,7 +22,9 @@ export default function CreateDialog({
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>
           <Stack direction={'row'} alignItems={'center'} spacing={1}>
-            <Typography variant={'h5'}>Send {symbol}</Typography>
+            <Typography variant={'h5'}>
+              <Trans>Send</Trans> {symbol}
+            </Typography>
             <Chip label={chain_id} color="primary" />
           </Stack>
         </DialogTitle>
@@ -30,7 +33,7 @@ export default function CreateDialog({
             Token: <strong>{address}</strong>
           </Typography>
           <Typography variant="body2" sx={{ maxWidth: '400px' }}>
-            Receiver: <strong>{admin}</strong>
+            <Trans>Receiver</Trans>: <strong>{admin}</strong>
           </Typography>
           <SendTokenForm onSubmit={onSubmit} />
         </DialogContent>

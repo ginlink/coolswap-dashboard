@@ -18,15 +18,24 @@ msgstr ""
 msgid "Action"
 msgstr "操作"
 
+#: src/pages/Token/data.ts
+msgid "Add to Metamask"
+msgstr "添加到Metamask"
+
 #: src/pages/Token/CreateTokenTable.tsx
 #: src/pages/Token/ReceiveTokenTable.tsx
 msgid "Address"
 msgstr "地址"
 
+#: src/components/ReceiveForm/index.tsx
 #: src/pages/Token/CreateTokenTable.tsx
 #: src/pages/Token/ReceiveTokenTable.tsx
 msgid "Amount"
 msgstr "数量"
+
+#: src/components/SendTokenForm/index.tsx
+msgid "Amount key is required"
+msgstr "请输入数量"
 
 #: src/layouts/dashboard/SidebarConfig.tsx
 msgid "Calculator"
@@ -37,6 +46,10 @@ msgstr "计算器"
 msgid "Chain"
 msgstr "链"
 
+#: src/pages/Token/Receive.tsx
+msgid "Connect wallet first"
+msgstr "请先连接钱包"
+
 #: src/components/Dashboard/listItems.tsx
 #: src/components/Dashboard/listItems.tsx
 msgid "Contract Call"
@@ -45,6 +58,8 @@ msgstr ""
 #: src/components/Dialog/CreateDialog.tsx
 #: src/components/Dialog/CreateTokenForm.tsx
 #: src/pages/Token/Create.tsx
+#: src/pages/Token/DeployTokenForm.tsx
+#: src/pages/Token/Receive.tsx
 msgid "Create"
 msgstr "创建"
 
@@ -54,10 +69,12 @@ msgstr "创建成功"
 
 #: src/components/Dashboard/listItems.tsx
 #: src/components/Dashboard/listItems.tsx
+#: src/pages/Token/CreateTokenDialog.tsx
 msgid "Create Token"
 msgstr "创建Token"
 
 #: src/pages/Token/Create.tsx
+#: src/pages/Token/Receive.tsx
 msgid "Create success"
 msgstr "创建成功"
 
@@ -69,32 +86,125 @@ msgstr "创建者"
 msgid "Decimals"
 msgstr ""
 
+#: src/components/Dialog/DeleteDialog.tsx
+#: src/components/Dialog/DelteTokenForm.tsx
+#: src/pages/Token/data.ts
+msgid "Delete"
+msgstr "删除"
+
+#: src/pages/Token/Receive.tsx
+msgid "Delete success"
+msgstr "删除成功"
+
+#: src/components/Dialog/DeleteDialog.tsx
+msgid "Enter private key for verifying"
+msgstr "请输入私钥进行验证"
+
 #: src/layouts/dashboard/SidebarConfig.tsx
 #: src/pages/Token/Receive.tsx
 msgid "Faucet"
 msgstr "水龙头"
 
+#: src/pages/Calculator/index.tsx
+msgid "Flat price"
+msgstr "强平价格"
+
+#: src/layouts/dashboard/DashboardNavbar.tsx
+#~ msgid "Hello World"
+#~ msgstr "你好世界"
+
 #: src/pages/Token/CreateTokenTable.tsx
 #: src/pages/Token/ReceiveTokenTable.tsx
-msgid "Id"
-msgstr ""
+#~ msgid "Id"
+#~ msgstr ""
+
+#: src/pages/Token/Receive.tsx
+#: src/pages/Token/Receive.tsx
+msgid "Invalid delete id"
+msgstr "非法的id"
 
 #: src/pages/Token/ReceiveTokenTable.tsx
 msgid "Native Amount"
 msgstr "原生代币数量"
 
 #: src/components/Dialog/CreateDialog.tsx
+#: src/components/Dialog/DeleteDialog.tsx
 msgid "Notice: Please use the private key of the test account. Otherwise there is a risk that the funds will be stolen!"
 msgstr "注意: 请使用测试帐号的私钥。否则会有资金被盗的风险!"
+
+#: src/components/Dialog/CreateTokenForm.tsx
+#: src/components/Dialog/DelteTokenForm.tsx
+msgid "Private key"
+msgstr "私钥"
+
+#: src/components/Dialog/CreateTokenForm.tsx
+#: src/components/Dialog/DelteTokenForm.tsx
+msgid "Private key is required"
+msgstr "请输入私钥"
+
+#: src/pages/Calculator/index.tsx
+msgid "Profit"
+msgstr "收益"
+
+#: src/pages/Calculator/index.tsx
+msgid "Profit stop price"
+msgstr "止盈价格"
 
 #: src/pages/Token/ReceiveTokenTable.tsx
 msgid "Provider"
 msgstr "提供者"
 
+#: src/components/ReceiveForm/index.tsx
+#: src/pages/Token/ReceiveDialog.tsx
+msgid "Receive"
+msgstr "接收"
+
+#: src/components/ReceiveForm/index.tsx
+msgid "Receive Address"
+msgstr "接收地址"
+
+#: src/pages/Token/Receive.tsx
+msgid "Receive Success"
+msgstr "接收成功"
+
 #: src/components/Dashboard/listItems.tsx
 #: src/components/Dashboard/listItems.tsx
 msgid "Receive Token"
 msgstr "接收Token"
+
+#: src/pages/Token/data.ts
+msgid "Receive token"
+msgstr "接收货币"
+
+#: src/pages/Token/SendDialog.tsx
+msgid "Receiver"
+msgstr "接收者"
+
+#: src/pages/Token/CreateTokenTable.tsx
+#: src/pages/Token/ReceiveTokenTable.tsx
+msgid "Rows per page:"
+msgstr "每页:"
+
+#: src/components/ListToolbar/index.tsx
+msgid "Search ..."
+msgstr "搜索 ..."
+
+#: src/components/SendTokenForm/index.tsx
+#: src/pages/Token/SendDialog.tsx
+msgid "Send"
+msgstr "发送"
+
+#: src/components/SendTokenForm/index.tsx
+msgid "Send Amount"
+msgstr "发送数量"
+
+#: src/pages/Token/data.ts
+msgid "Send token"
+msgstr "发送货币"
+
+#: src/pages/Calculator/index.tsx
+msgid "Stop price"
+msgstr "止损价格"
 
 #: src/pages/Token/CreateTokenTable.tsx
 #: src/pages/Token/ReceiveTokenTable.tsx
@@ -106,3 +216,15 @@ msgstr ""
 #: src/pages/Token/Create.tsx
 msgid "Tokens"
 msgstr "加密货币"
+
+#: src/pages/Token/DeployTokenForm.tsx
+msgid "Total amount"
+msgstr "总量"
+
+#: src/pages/Token/DeployTokenForm.tsx
+msgid "Whether to join the List?"
+msgstr "是否加入列表?"
+
+#: src/layouts/dashboard/DashboardNavbar.tsx
+#~ msgid "example"
+#~ msgstr "例子"

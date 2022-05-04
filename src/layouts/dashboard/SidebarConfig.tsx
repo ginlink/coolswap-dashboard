@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 // import peopleFill from '@iconify/icons-eva/people-fill'
 // import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill'
 import React, { ReactNode } from 'react'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 
 // ----------------------------------------------------------------------
 
@@ -24,17 +24,17 @@ const sidebarConfig = [
   //   icon: getIcon(pieChart2Fill),
   // },
   {
-    title: t`Faucet`,
+    title: <Trans>Faucet</Trans>,
     path: '/dashboard/token/receive',
     icon: getIcon('fa-solid:faucet'),
   },
   {
-    title: t`Tokens`,
+    title: <Trans>Tokens</Trans>,
     path: '/dashboard/token/create',
     icon: getIcon('ic:round-generating-tokens'),
   },
   {
-    title: t`Calculator`,
+    title: <Trans>Calculator</Trans>,
     path: '/dashboard/calculator',
     icon: getIcon('akar-icons:calculator'),
   },
